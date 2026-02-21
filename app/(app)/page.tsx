@@ -1,4 +1,4 @@
-import FeaturedCarousel from "@/components/features/FeaturedCarousel";
+import {FeaturedCarousel} from "@/components/features/FeaturedCarousel";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
 import { FEATURED_PRODUCTS_QUERY, FILTER_PRODUCTS_BY_NAME_QUERY, FILTER_PRODUCTS_BY_PRICE_ASC_QUERY, FILTER_PRODUCTS_BY_PRICE_DESC_QUERY, FILTER_PRODUCTS_BY_RELEVANCE_QUERY } from "@/sanity/queries/products";
