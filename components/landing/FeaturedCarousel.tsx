@@ -24,7 +24,7 @@ interface FeaturedCarouselProps {
   products: FEATURED_PRODUCTS_QUERYResult;
 }
 
-export function FeaturedCarousel({ products }: FeaturedCarouselProps) {
+export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);

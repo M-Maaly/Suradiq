@@ -1,7 +1,16 @@
-import {FeaturedCarousel} from "@/components/features/FeaturedCarousel";
+import CategoryTiles from "@/components/landing/CategoryTiles";
+import FeaturedCarousel from "@/components/landing/FeaturedCarousel";
+import { FeaturedCarouselSkeleton } from "@/components/landing/FeaturedCarouselSkeleton";
+import { ProductSection } from "@/components/landing/ProductSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
-import { FEATURED_PRODUCTS_QUERY, FILTER_PRODUCTS_BY_NAME_QUERY, FILTER_PRODUCTS_BY_PRICE_ASC_QUERY, FILTER_PRODUCTS_BY_PRICE_DESC_QUERY, FILTER_PRODUCTS_BY_RELEVANCE_QUERY } from "@/sanity/queries/products";
+import {
+  FEATURED_PRODUCTS_QUERY,
+  FILTER_PRODUCTS_BY_NAME_QUERY,
+  FILTER_PRODUCTS_BY_PRICE_ASC_QUERY,
+  FILTER_PRODUCTS_BY_PRICE_DESC_QUERY,
+  FILTER_PRODUCTS_BY_RELEVANCE_QUERY,
+} from "@/sanity/queries/products";
 import { Suspense } from "react";
 
 interface PageProps {
@@ -29,39 +38,38 @@ export default async function Home({ searchParams }: PageProps) {
   const maxPrice = Number(params.maxPrice) || 0;
   const inStock = params.inStock ? true : false;
 
-
   // select query based on sort parameter
   const getQuery = () => {
     // if searching and sort is relevance, use relevance query
-    if(searchQuery && sort === "relevance") {
-      return FILTER_PRODUCTS_BY_RELEVANCE_QUERY
+    if (searchQuery && sort === "relevance") {
+      return FILTER_PRODUCTS_BY_RELEVANCE_QUERY;
     }
 
     switch (sort) {
       case "price_asc":
-        return FILTER_PRODUCTS_BY_PRICE_ASC_QUERY
+        return FILTER_PRODUCTS_BY_PRICE_ASC_QUERY;
       case "price_desc":
-        return FILTER_PRODUCTS_BY_PRICE_DESC_QUERY
-      case "relevance" : 
-        return FILTER_PRODUCTS_BY_RELEVANCE_QUERY
+        return FILTER_PRODUCTS_BY_PRICE_DESC_QUERY;
+      case "relevance":
+        return FILTER_PRODUCTS_BY_RELEVANCE_QUERY;
       default:
-        return FILTER_PRODUCTS_BY_NAME_QUERY
+        return FILTER_PRODUCTS_BY_NAME_QUERY;
     }
-  }
+  };
 
-// Fetch product with filter (server-side)
-const {data: products} = await sanityFetch({
-  query: getQuery(),
-  params: {
-    searchQuery,
-    categorySlug,
-    color,
-    material,
-    minPrice,
-    maxPrice,
-    inStock,
-  }
-})
+  // Fetch product with filter (server-side)
+  const { data: products } = await sanityFetch({
+    query: getQuery(),
+    params: {
+      searchQuery,
+      categorySlug,
+      color,
+      material,
+      minPrice,
+      maxPrice,
+      inStock,
+    },
+  });
 
   // Fetch all categories for filter sidebar
   const { data: categories } = await sanityFetch({
@@ -69,23 +77,46 @@ const {data: products} = await sanityFetch({
   });
 
   // Fetch featured products for carousel
-  const {data: feateredProducts} = await sanityFetch({
-    query: FEATURED_PRODUCTS_QUERY
-  })
+  const { data: feateredProducts } = await sanityFetch({
+    query: FEATURED_PRODUCTS_QUERY,
+  });
   console.log(categories);
   console.log(feateredProducts);
   return (
     <div className="">
       {/* Featured Product carousel */}
-    <Suspense fallback={<div>Loading...</div>}>
-      <FeaturedCarousel products={feateredProducts} />
-    </Suspense>
+      <Suspense fallback={<FeaturedCarouselSkeleton />}>
+        <FeaturedCarousel products={feateredProducts} />
+      </Suspense>
+
       {/* Page paner */}
+      <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 ">
+            Shop {categorySlug ? categorySlug : "All Products"}
+          </h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            Premium furniture for your home
+          </p>
+        </div>
+      </div>
 
       {/* categories Titles */}
+      <div className="mt-6">
+        <CategoryTiles
+          categories={categories}
+          activeCategory={categorySlug || undefined}
+        />
+      </div>
 
       {/* Products Section */}
-
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <ProductSection
+          categories={categories}
+          products={products}
+          searchQuery={searchQuery}
+        />
+      </div>
       {/* Footer */}
     </div>
   );
