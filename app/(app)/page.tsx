@@ -25,7 +25,25 @@ interface PageProps {
     inStock?: string;
   }>;
 }
-
+/**
+ * Why is the folder called (app) and why are page and layout placed there,
+ * instead of at the top level of the app folder?
+ *
+ * In Next.js 13 and newer with the App Router, folders with parentheses (e.g., (app)) are "optional groups."
+ * These folders are used to logically group routes, layouts, or UI patterns without affecting the URL structure.
+ * 
+ * By convention:
+ *   - Files like `page.tsx` and `layout.tsx` define route boundaries and shared layouts.
+ *   - Placing them inside an optional group (like (app)) lets you define "app-wide" layout and routing logic
+ *     while keeping the route `/` at the site root and keeping project structure organized.
+ *   - This avoids polluting the base `app/` directory with many related files and folders required for different UI groupings,
+ *     experiments, or features.
+ *
+ * In summary:
+ *   - (app) is just a folder for logical organization. It does not affect the generated route path.
+ *   - Keeping `page.tsx`, `layout.tsx`, etc. in groups like (app) allows for cleaner structure,
+ *     modularity, and scaling as the app grows.
+ */
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
 
