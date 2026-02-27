@@ -1,4 +1,5 @@
-import { Header } from "@/components/Header";
+import { CartSheet } from "@/components/app/CartSheet";
+import { Header } from "@/components/app/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { CartStoreProvider } from "@/lib/store/cart-store-provider";
 import { ChatStoreProvider } from "@/lib/store/chat-store-provider";
@@ -12,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <ChatStoreProvider>
           <Header />
           <main>{children}</main>
+          <CartSheet />
           <Toaster position="bottom-center" />
           <SanityLive />
         </ChatStoreProvider>
