@@ -1,3 +1,4 @@
+import { AppShell } from "@/components/app/AppShell";
 import { CartSheet } from "@/components/app/CartSheet";
 import { ChatSheet } from "@/components/app/ChatSheet";
 import { Header } from "@/components/app/Header";
@@ -12,8 +13,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <ClerkProvider>
       <CartStoreProvider>
         <ChatStoreProvider>
-          <Header />
-          <main>{children}</main>
+          <AppShell>
+            <Header />
+            <main>{children}</main>
+          </AppShell>
           <CartSheet />
           <ChatSheet />
           <Toaster position="bottom-center" />
