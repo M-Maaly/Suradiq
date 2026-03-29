@@ -113,6 +113,15 @@ export function ToolCallUI({ toolPart, closeChat }: ToolCallUIProps) {
         </div>
       )}
 
+      {/* No products found message */}
+      {toolName === "searchProducts" && isComplete && !hasProducts && productResult && (
+        <div className="ml-11 mt-2">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 italic">
+            {productResult.message || "No products found matching your search."}
+          </p>
+        </div>
+      )}
+
       {/* Order results */}
       {hasOrders && orderResult?.orders && (
         <div className="ml-11 mt-2">
@@ -129,6 +138,15 @@ export function ToolCallUI({ toolPart, closeChat }: ToolCallUIProps) {
               />
             ))}
           </div>
+        </div>
+      )}
+
+      {/* No orders found message */}
+      {toolName === "getMyOrders" && isComplete && !hasOrders && orderResult && (
+        <div className="ml-11 mt-2">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 italic">
+            {orderResult.message || "No orders found."}
+          </p>
         </div>
       )}
     </div>
