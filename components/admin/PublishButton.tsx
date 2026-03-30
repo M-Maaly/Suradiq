@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -156,25 +157,27 @@ function RevertButtonContent({ size = "icon", ...handle }: RevertButtonProps) {
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="destructive"
-          size={size}
-          onClick={handleRevert}
-          disabled={isReverting}
-        >
-          {isReverting ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Undo2 className="h-4 w-4" />
-          )}
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Discard changes</p>
-      </TooltipContent>
-    </Tooltip>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="destructive"
+            size={size}
+            onClick={handleRevert}
+            disabled={isReverting}
+          >
+            {isReverting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Undo2 className="h-4 w-4" />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Discard changes</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
