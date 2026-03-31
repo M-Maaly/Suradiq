@@ -5,7 +5,6 @@ import { Header } from "@/components/app/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { CartStoreProvider } from "@/lib/store/cart-store-provider";
 import { ChatStoreProvider } from "@/lib/store/chat-store-provider";
-import { SanityLive } from "@/sanity/lib/live";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -20,7 +19,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <CartSheet />
           <ChatSheet />
           <Toaster position="bottom-center" />
-          <SanityLive />
         </ChatStoreProvider>
       </CartStoreProvider>
     </ClerkProvider>
