@@ -10,6 +10,11 @@ export const COLORS = [
   { value: "walnut", label: "Walnut" },
   { value: "grey", label: "Grey" },
   { value: "natural", label: "Natural" },
+  { value: "brown", label: "Brown" },
+  { value: "green", label: "Green" },
+  { value: "red", label: "Red" },
+  { value: "gold", label: "Gold" },
+  { value: "orange", label: "Orange" },
 ] as const;
 
 export const MATERIALS = [
@@ -18,6 +23,7 @@ export const MATERIALS = [
   { value: "fabric", label: "Fabric" },
   { value: "leather", label: "Leather" },
   { value: "glass", label: "Glass" },
+  { value: "velvet", label: "Velvet" },
 ] as const;
 
 export const SORT_OPTIONS = [
