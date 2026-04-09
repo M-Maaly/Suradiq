@@ -2,52 +2,44 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function FeaturedCarouselSkeleton() {
   return (
-    <div className="relative w-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
-      {/* Prev/Next arrow placeholders - match CarouselPrevious/CarouselNext position */}
-      <Skeleton
-        className="absolute left-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-800/80 sm:left-8"
-        aria-hidden
-      />
-      <Skeleton
-        className="absolute right-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-800/80 sm:right-8"
-        aria-hidden
-      />
-
-      {/* Single slide skeleton - same structure as FeaturedSlide */}
-      <div className="flex min-h-[400px] flex-col md:min-h-[450px] md:flex-row lg:min-h-[500px]">
-        {/* Image Section - Left (60% on desktop), same as FeaturedCarousel */}
-        <div className="relative h-64 w-full md:h-auto md:w-3/5">
-          <Skeleton className="h-full w-full rounded-none bg-zinc-800" />
+    <div className="relative mx-auto mt-4 w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-[70vh] w-full flex-col overflow-hidden rounded-[2.5rem] bg-[#EDEAE4] dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800">
+        {/* Background text placeholder */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 z-0">
+          <Skeleton className="h-24 w-[60vw] rounded-xl bg-zinc-300/30 dark:bg-zinc-700/30" />
         </div>
 
-        {/* Content Section - Right (40% on desktop) */}
-        <div className="flex w-full flex-col justify-center px-6 py-8 md:w-2/5 md:px-10 lg:px-16">
-          {/* Category badge */}
-          <Skeleton className="mb-4 h-6 w-24 rounded-md bg-zinc-700" />
-
-          {/* Title - text-2xl to lg:text-4xl equivalent height */}
-          <Skeleton className="h-8 w-3/4 rounded-md bg-zinc-700 sm:h-9 lg:h-10" />
-
-          {/* Description - line-clamp-3 ≈ 3 lines */}
-          <div className="mt-4 space-y-2">
-            <Skeleton className="h-4 w-full rounded-md bg-zinc-700" />
-            <Skeleton className="h-4 w-[95%] rounded-md bg-zinc-700" />
-            <Skeleton className="h-4 w-4/6 rounded-md bg-zinc-700" />
+        <div className="relative z-10 flex h-full flex-col lg:flex-row flex-1 items-center justify-between px-8 py-12 lg:px-16 lg:py-20">
+          {/* Left content */}
+          <div className="w-full lg:w-1/3 flex flex-col gap-4 justify-end mt-40 lg:mt-0 h-full">
+            <Skeleton className="h-4 w-full max-w-xs rounded-md bg-zinc-300/50 dark:bg-zinc-700/50" />
+            <Skeleton className="h-4 w-[80%] max-w-xs rounded-md bg-zinc-300/50 dark:bg-zinc-700/50" />
+            <Skeleton className="h-12 w-36 rounded-full bg-zinc-300/50 dark:bg-zinc-700/50 mt-4" />
           </div>
 
-          {/* Price */}
-          <Skeleton className="mt-6 h-9 w-32 rounded-md bg-zinc-700 lg:h-10" />
+          {/* Center image placeholder */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center">
+            <Skeleton className="h-[400px] w-[400px] lg:h-[600px] lg:w-[600px] rounded-full bg-zinc-300/30 dark:bg-zinc-700/30" />
+          </div>
 
-          {/* Button - Shop Now with icon */}
-          <Skeleton className="mt-8 h-12 w-36 rounded-md bg-zinc-700 sm:h-11" />
+          {/* Right content */}
+          <div className="w-full lg:w-1/3 flex flex-col items-end gap-4 justify-end h-full">
+            <div className="flex gap-2">
+              <Skeleton className="h-16 w-16 rounded-xl bg-zinc-300/50 dark:bg-zinc-700/50" />
+              <Skeleton className="h-16 w-16 rounded-xl bg-zinc-300/50 dark:bg-zinc-700/50" />
+              <Skeleton className="h-16 w-16 rounded-xl bg-zinc-300/50 dark:bg-zinc-700/50" />
+            </div>
+            <Skeleton className="h-8 w-32 rounded-md bg-zinc-300/50 dark:bg-zinc-700/50" />
+            <Skeleton className="h-4 w-40 rounded-md bg-zinc-300/50 dark:bg-zinc-700/50" />
+          </div>
         </div>
-      </div>
 
-      {/* Dot indicators - match position from FeaturedCarousel */}
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 sm:bottom-6">
-        <Skeleton className="h-2 w-6 rounded-full bg-zinc-700" />
-        <Skeleton className="h-2 w-2 rounded-full bg-zinc-700" />
-        <Skeleton className="h-2 w-2 rounded-full bg-zinc-700" />
+        {/* Dot indicators */}
+        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-3">
+          <Skeleton className="h-2 w-8 rounded-full bg-zinc-300/50 dark:bg-zinc-700/50" />
+          <Skeleton className="h-2 w-2 rounded-full bg-zinc-300/50 dark:bg-zinc-700/50" />
+          <Skeleton className="h-2 w-2 rounded-full bg-zinc-300/50 dark:bg-zinc-700/50" />
+        </div>
       </div>
     </div>
   );

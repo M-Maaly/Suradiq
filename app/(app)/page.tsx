@@ -1,91 +1,34 @@
 import CategoryTiles from "@/components/landing/CategoryTiles";
 import FeaturedCarousel from "@/components/landing/FeaturedCarousel";
 import { FeaturedCarouselSkeleton } from "@/components/landing/FeaturedCarouselSkeleton";
-import { ProductSection } from "@/components/landing/ProductSection";
+import { PersonalizedHome } from "@/components/landing/PersonalizedHome";
+import { MarqueeBanner } from "@/components/landing/MarqueeBanner";
+import { SeasonalSale } from "@/components/landing/SeasonalSale";
+import { BestSellers } from "@/components/landing/BestSellers";
+import { BenefitsRow } from "@/components/landing/BenefitsRow";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
 import {
   FEATURED_PRODUCTS_QUERY,
   FILTER_PRODUCTS_BY_NAME_QUERY,
-  FILTER_PRODUCTS_BY_PRICE_ASC_QUERY,
-  FILTER_PRODUCTS_BY_PRICE_DESC_QUERY,
-  FILTER_PRODUCTS_BY_RELEVANCE_QUERY,
 } from "@/sanity/queries/products";
 import { Suspense } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-interface PageProps {
-  searchParams: Promise<{
-    q?: string;
-    category?: string;
-    color: string;
-    material?: string;
-    sort?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    inStock?: string;
-  }>;
-}
-/**
- * Why is the folder called (app) and why are page and layout placed there,
- * instead of at the top level of the app folder?
- *
- * In Next.js 13 and newer with the App Router, folders with parentheses (e.g., (app)) are "optional groups."
- * These folders are used to logically group routes, layouts, or UI patterns without affecting the URL structure.
- * 
- * By convention:
- *   - Files like `page.tsx` and `layout.tsx` define route boundaries and shared layouts.
- *   - Placing them inside an optional group (like (app)) lets you define "app-wide" layout and routing logic
- *     while keeping the route `/` at the site root and keeping project structure organized.
- *   - This avoids polluting the base `app/` directory with many related files and folders required for different UI groupings,
- *     experiments, or features.
- *
- * In summary:
- *   - (app) is just a folder for logical organization. It does not affect the generated route path.
- *   - Keeping `page.tsx`, `layout.tsx`, etc. in groups like (app) allows for cleaner structure,
- *     modularity, and scaling as the app grows.
- */
-export default async function Home({ searchParams }: PageProps) {
-  const params = await searchParams;
+export default async function Home() {
 
-  const searchQuery = params.q ?? "";
-  const categorySlug = params.category ?? "";
-  const color = params.color ?? "";
-  const material = params.material ?? "";
-  const sort = params.sort ?? "name";
-  const minPrice = Number(params.minPrice) || 0;
-  const maxPrice = Number(params.maxPrice) || 0;
-  const inStock = params.inStock ? true : false;
-
-  // select query based on sort parameter
-  const getQuery = () => {
-    // if searching and sort is relevance, use relevance query
-    if (searchQuery && sort === "relevance") {
-      return FILTER_PRODUCTS_BY_RELEVANCE_QUERY;
-    }
-
-    switch (sort) {
-      case "price_asc":
-        return FILTER_PRODUCTS_BY_PRICE_ASC_QUERY;
-      case "price_desc":
-        return FILTER_PRODUCTS_BY_PRICE_DESC_QUERY;
-      case "relevance":
-        return FILTER_PRODUCTS_BY_RELEVANCE_QUERY;
-      default:
-        return FILTER_PRODUCTS_BY_NAME_QUERY;
-    }
-  };
-
-  // Fetch product with filter (server-side)
+  // Fetch all products (just taking a general slice for BestSellers/Suggestions)
   const { data: products } = await sanityFetch({
-    query: getQuery(),
+    query: FILTER_PRODUCTS_BY_NAME_QUERY,
     params: {
-      searchQuery,
-      categorySlug,
-      color,
-      material,
-      minPrice,
-      maxPrice,
-      inStock,
+      searchQuery: "",
+      categorySlug: "",
+      color: "",
+      material: "",
+      minPrice: 0,
+      maxPrice: 0,
+      inStock: false,
     },
   });
 
@@ -98,44 +41,56 @@ export default async function Home({ searchParams }: PageProps) {
   const { data: feateredProducts } = await sanityFetch({
     query: FEATURED_PRODUCTS_QUERY,
   });
-  console.log(categories);
-  console.log(feateredProducts);
+
+  const featuredSaleProduct = products.find((p: any) => p.name?.toLowerCase().includes("executive ergonomic office chair")) || products[0];
+
   return (
-    <div className="">
-      {/* Featured Product carousel */}
+    <div className="pb-0">
+      {/* 1. Featured Top Carousel */}
       <Suspense fallback={<FeaturedCarouselSkeleton />}>
         <FeaturedCarousel products={feateredProducts} />
       </Suspense>
 
-      {/* Page paner */}
-      <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 ">
-            Shop {categorySlug ? categorySlug : "All Products"}
-          </h1>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Premium furniture for your home
-          </p>
-        </div>
+      {/* 2. Marquee Promotion */}
+      <MarqueeBanner />
+      
+      <div id="collection" className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 mt-12 mb-8">
+        <h2 className="text-4xl font-black tracking-tighter text-zinc-900 md:text-5xl dark:text-zinc-100 uppercase">
+          Shop by Category
+        </h2>
       </div>
 
-      {/* categories Titles */}
-      <div className="mt-6">
+      {/* 3. Category Grids */}
+      <div className="mt-8">
         <CategoryTiles
           categories={categories}
-          activeCategory={categorySlug || undefined}
         />
       </div>
 
-      {/* Products Section */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <ProductSection
-          categories={categories}
-          products={products}
-          searchQuery={searchQuery}
-        />
+      {/* 4. Seasonal Flash Sale / Discount Wrapper */}
+      <SeasonalSale product={featuredSaleProduct as any} />
+
+      {/* 5. Best Sellers Grid */}
+      <BestSellers products={products} />
+
+      {/* 6. Personalized/Recent Suggestions */}
+      <div className="mx-auto mt-8 mb-16 max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <PersonalizedHome products={products} />
       </div>
-      {/* Footer */}
+
+      {/* CTA to view full shop */}
+      <div className="flex justify-center mb-24">
+        <Link 
+          href="/shop"
+          className="group inline-flex items-center gap-2 rounded-full border border-zinc-200 px-8 py-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-all hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-900"
+        >
+          View Full Collection
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
+
+      {/* 7. Brand Trust & Benefits */}
+      <BenefitsRow />
     </div>
   );
 }

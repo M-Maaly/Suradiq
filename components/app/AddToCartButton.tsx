@@ -49,7 +49,7 @@ export function AddToCartButton({
       <Button
         disabled
         variant="secondary"
-        className={cn("h-11 w-full", className)}
+        className={cn("h-11 w-full rounded-full", className)}
       >
         Out of Stock
       </Button>
@@ -59,7 +59,13 @@ export function AddToCartButton({
   // Not in cart - show Add to Basket button
   if (quantityInCart === 0) {
     return (
-      <Button onClick={handleAdd} className={cn("h-11 w-full", className)}>
+      <Button
+        onClick={handleAdd}
+        className={cn(
+          "h-11 w-full rounded-full bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200",
+          className,
+        )}
+      >
         <ShoppingBag className="mr-2 h-4 w-4" />
         Add to Basket
       </Button>
@@ -70,7 +76,7 @@ export function AddToCartButton({
   return (
     <div
       className={cn(
-        "flex h-11 w-full items-center rounded-md border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900",
+        "flex h-11 w-full items-center rounded-full border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900",
         className,
       )}
     >
