@@ -122,7 +122,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 productId: product._id,
                 name: product.name ?? "Unknown Product",
                 price: product.price ?? 0,
-                image: product.images?.[0]?.asset?.url,
+                image: product.images?.[0]?.asset?.url ?? undefined,
                 slug: slugValue,
               });
               if (!wasWishlisted) openWishlist();

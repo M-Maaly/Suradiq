@@ -30,7 +30,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   });
 
   // Try to find the title of the current category from the loaded categories
-  const currentCategoryObj = categories.find(c => c.slug?.current === categorySlug);
+  const currentCategoryObj = categories.find(c => c.slug === categorySlug);
   const categoryTitle = currentCategoryObj?.title || categorySlug;
 
   return (
