@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Ruler, Leaf, Hand, Shield } from "lucide-react";
+import { Ruler, Leaf, Hand, Shield, Truck } from "lucide-react";
 
 const craftSteps = [
   {
@@ -17,10 +17,10 @@ const craftSteps = [
       "We partner with certified suppliers to use only FSC-approved wood, organic fabrics, and eco-friendly finishes.",
   },
   {
-    icon: Ruler,
-    title: "Precision engineered",
+    icon: Truck,
+    title: "White-Glove Delivery",
     description:
-      "From joint to finish, every millimetre is measured with exacting standards to ensure a lifetime of use.",
+      "Our specialist team delivers, assembles, and places your new pieces exactly where you want them.",
   },
   {
     icon: Shield,

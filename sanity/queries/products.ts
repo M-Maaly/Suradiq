@@ -94,7 +94,7 @@ export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[
     "Vintage Leather Chesterfield",
     "Executive Ergonomic Office Chair",
     "Cognac Leather Accent Chair",
-    "Japanese Oak Platform Bed"
+    "Emerald Velvet Luxury Armchair"
   ]
   && stock > 0
 ] | order(name asc) {

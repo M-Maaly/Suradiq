@@ -1,14 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const partners = [
-  { name: "Architectural Digest", initials: "AD" },
-  { name: "Elle Décor", initials: "ED" },
-  { name: "Wallpaper", initials: "W*" },
-  { name: "Dwell", initials: "DW" },
-  { name: "Dezeen", initials: "DZ" },
-  { name: "Monocle", initials: "MN" },
+  { name: "Vogue Living", initials: "VL", logo: "/logos/vogue-living.svg" },
+  { name: "Elle Décor", initials: "ED", logo: "/logos/elle-decor.svg" },
+  { name: "Kinfolk", initials: "KF", logo: "/logos/kinfolk.svg" },
+  { name: "Dwell", initials: "DW", logo: "/logos/dwell.svg" },
+  { name: "Dezeen", initials: "DZ", logo: "/logos/dezeen.svg" },
+  { name: "Monocle", initials: "MN", logo: "/logos/monocle.svg" },
 ];
 
 export function TrustedPartners() {
@@ -49,10 +50,23 @@ export function TrustedPartners() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="group flex flex-col items-center justify-center gap-3 rounded-3xl border border-zinc-800/60 bg-zinc-900/50 px-6 py-10 backdrop-blur-sm transition-all duration-500 hover:border-zinc-700 hover:bg-zinc-800/50"
             >
-              {/* Logo placeholder as stylized initials */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-800 text-xl font-black tracking-tight text-zinc-400 transition-colors duration-500 group-hover:bg-white group-hover:text-zinc-900">
-                {partner.initials}
-              </div>
+              {partner.logo ? (
+                /* Real logo image */
+                <div className="flex h-14 w-full items-center justify-center rounded-2xl bg-zinc-800 p-3 transition-colors duration-500 group-hover:bg-white">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto object-contain invert transition-all duration-500 group-hover:invert-0"
+                  />
+                </div>
+              ) : (
+                /* Fallback: stylized initials */
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-800 text-xl font-black tracking-tight text-zinc-400 transition-colors duration-500 group-hover:bg-white group-hover:text-zinc-900">
+                  {partner.initials}
+                </div>
+              )}
               <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500 transition-colors group-hover:text-zinc-300">
                 {partner.name}
               </span>

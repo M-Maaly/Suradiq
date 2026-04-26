@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="currentColor">
+  <text x="100" y="140" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="bold" text-anchor="middle" letter-spacing="-8">AD</text>
+  <line x1="10" y1="158" x2="190" y2="158" stroke="currentColor" stroke-width="1"/>
+  <text x="100" y="180" font-family="Georgia, 'Times New Roman', serif" font-size="14" font-weight="normal" text-anchor="middle" letter-spacing="4">ARCHITECTURAL DIGEST</text>
+</svg>

@@ -5,7 +5,6 @@ import { PersonalizedHome } from "@/components/landing/PersonalizedHome";
 import { MarqueeBanner } from "@/components/landing/MarqueeBanner";
 import { SeasonalSale } from "@/components/landing/SeasonalSale";
 import { BestSellers } from "@/components/landing/BestSellers";
-import { BenefitsRow } from "@/components/landing/BenefitsRow";
 import { TrustedPartners } from "@/components/landing/TrustedPartners";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Craftsmanship } from "@/components/landing/Craftsmanship";
@@ -101,8 +100,6 @@ export default async function Home() {
         </Link>
       </div>
 
-      {/* 7. Brand Trust & Benefits */}
-      <BenefitsRow />
     </div>
   );
 }

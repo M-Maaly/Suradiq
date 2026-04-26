@@ -116,7 +116,7 @@ function FeaturedSlide({ product }: FeaturedSlideProps) {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-[14vw] font-black leading-none tracking-tighter text-zinc-900 dark:text-zinc-100 whitespace-nowrap opacity-90"
         >
-          {product.name?.toLowerCase().split(" ",1) || "suradiq"}
+          {product.name?.toLowerCase().split(" ",2) || "suradiq"}
         </motion.h1>
       </div>
 
