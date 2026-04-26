@@ -61,7 +61,7 @@ export function QuickViewModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl rounded-3xl border-zinc-200/60 bg-white p-0 overflow-hidden dark:border-zinc-800/60 dark:bg-zinc-950">
+      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto rounded-3xl border-zinc-200/60 bg-white p-0 scrollbar-hide dark:border-zinc-800/60 dark:bg-zinc-950">
         <div className="grid gap-0 md:grid-cols-2">
           {/* Image Side */}
           <div className="relative aspect-square bg-[#EDEAE4] dark:bg-zinc-900">

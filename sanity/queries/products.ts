@@ -88,9 +88,16 @@ export const ALL_PRODUCTS_QUERY = defineQuery(`*[
  */
 export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[
   _type == "product"
-  && featured == true
+  && name in [
+    "The Royale Emerald Curved Sofa",
+    "Nordic Grey 3-Seater Sofa",
+    "Vintage Leather Chesterfield",
+    "Executive Ergonomic Office Chair",
+    "Cognac Leather Accent Chair",
+    "Japanese Oak Platform Bed"
+  ]
   && stock > 0
-] | order(name asc) [0...6] {
+] | order(name asc) {
   _id,
   name,
   "slug": slug.current,

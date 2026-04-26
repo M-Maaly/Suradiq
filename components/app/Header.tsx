@@ -2,9 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Heart, Package, ShoppingBag, Sparkles, User } from "lucide-react";
+import { Heart, Menu, Package, ShoppingBag, Sparkles, User, Home, ShoppingCart, Info, Mail, Hammer } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useCartActions, useTotalItems } from "@/lib/store/cart-store-provider";
 import { useChatActions, useIsChatOpen } from "@/lib/store/chat-store-provider";
 import { useWishlistItems, useWishlistActions } from "@/lib/store/wishlist-store-provider";
@@ -27,8 +34,61 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/60 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-zinc-800/60 dark:bg-zinc-950/95">
       <div className="mx-auto flex h-[68px] max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <Logo />
+        {/* Left Side: Mobile Menu & Logo */}
+        <div className="flex items-center gap-4">
+          {/* Mobile Menu Trigger */}
+          <div className="lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] bg-[#FAF9F7] p-0 dark:bg-zinc-950">
+                <SheetHeader className="border-b border-zinc-200 p-6 dark:border-zinc-800">
+                  <SheetTitle className="text-left">
+                    <Logo />
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-2 p-6">
+                  <Link href="/" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                    <Home className="h-4 w-4" /> Home
+                  </Link>
+                  <Link href="/shop" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                    <ShoppingCart className="h-4 w-4" /> Shop
+                  </Link>
+                  <Link href="/about" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                    <Info className="h-4 w-4" /> About Us
+                  </Link>
+                  <Link href="/contact" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                    <Mail className="h-4 w-4" /> Contact
+                  </Link>
+                  <SignedIn>
+                    <Link href="/orders" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                      <Package className="h-4 w-4" /> Orders
+                    </Link>
+                  </SignedIn>
+                  
+                  <div className="my-4 h-px bg-zinc-200 dark:bg-zinc-800" />
+
+                  <div className="flex flex-col gap-4">
+                     <Button
+                        onClick={() => {
+                          openChat();
+                        }}
+                        className="w-full justify-start rounded-full border border-zinc-200 bg-white px-6 py-6 text-sm font-bold uppercase tracking-widest text-zinc-900 shadow-none transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                      >
+                        <Sparkles className="h-3.5 w-3.5 mr-2 text-amber-500" />
+                        Ask AI Assistant
+                      </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+          
+          <Logo />
+        </div>
 
         {/* Center Nav Links (desktop) */}
         <nav className="hidden lg:flex items-center gap-8">
@@ -38,20 +98,28 @@ export function Header() {
           <Link href="/shop" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
             Shop
           </Link>
-          <Link href="/orders" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-            Orders
+          <Link href="/about" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            About Us
           </Link>
+          <Link href="/contact" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            Contact
+          </Link>
+          <SignedIn>
+            <Link href="/orders" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+              Orders
+            </Link>
+          </SignedIn>
         </nav>
 
         {/* Actions */}
         <div className="flex items-center gap-1 sm:gap-2">
           {mounted && (
             <>
-              {/* AI Shopping Assistant */}
+              {/* AI Shopping Assistant (hidden on mobile, moved to menu) */}
               {!isChatOpen && (
                 <Button
                   onClick={openChat}
-                  className="hidden rounded-full border border-zinc-200 bg-white px-5 py-2 text-sm font-semibold text-zinc-900 shadow-none transition-all hover:bg-zinc-50 hover:shadow-md sm:inline-flex dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  className="hidden rounded-full border border-zinc-200 bg-white px-5 py-2 text-sm font-semibold text-zinc-900 shadow-none transition-all hover:bg-zinc-50 hover:shadow-md lg:inline-flex dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
                 >
                   <Sparkles className="h-3.5 w-3.5 mr-1.5 text-amber-500" />
                   Ask AI
@@ -128,15 +196,7 @@ export function Header() {
                 </SignInButton>
               </SignedOut>
 
-              {/* Shop pill */}
-              <Button
-                asChild
-                className="hidden sm:inline-flex rounded-full bg-zinc-900 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-zinc-700 hover:scale-105 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-              >
-                <Link href="/shop">
-                  shop ↗
-                </Link>
-              </Button>
+
             </>
           )}
 
@@ -150,3 +210,4 @@ export function Header() {
     </header>
   );
 }
+

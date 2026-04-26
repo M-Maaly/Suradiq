@@ -6,6 +6,9 @@ import { MarqueeBanner } from "@/components/landing/MarqueeBanner";
 import { SeasonalSale } from "@/components/landing/SeasonalSale";
 import { BestSellers } from "@/components/landing/BestSellers";
 import { BenefitsRow } from "@/components/landing/BenefitsRow";
+import { TrustedPartners } from "@/components/landing/TrustedPartners";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { Craftsmanship } from "@/components/landing/Craftsmanship";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
 import {
@@ -73,7 +76,16 @@ export default async function Home() {
       {/* 5. Best Sellers Grid */}
       <BestSellers products={products} />
 
-      {/* 6. Personalized/Recent Suggestions */}
+      {/* 6. Trusted Partners & Collaborations */}
+      <TrustedPartners />
+
+      {/* 7. Customer Testimonials */}
+      <Testimonials />
+
+      {/* 8. Our Craftsmanship */}
+      <Craftsmanship />
+
+      {/* 9. Personalized/Recent Suggestions */}
       <div className="mx-auto mt-8 mb-16 max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <PersonalizedHome products={products} />
       </div>

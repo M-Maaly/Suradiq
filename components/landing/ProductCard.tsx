@@ -89,7 +89,8 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* Hover: Add to cart slides up */}
           <div className={cn(
             "absolute bottom-0 left-0 right-0 p-3 transition-all duration-300",
-            isHovered ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            "lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100",
+            "translate-y-0 opacity-100 lg:group-hover:translate-y-0" // Always show on mobile/touch
           )}>
             <AddToCartButton
               productId={product._id}
@@ -97,7 +98,7 @@ export function ProductCard({ product }: ProductCardProps) {
               price={product.price ?? 0}
               image={mainImageUrl ?? undefined}
               stock={stock}
-              className="rounded-full bg-white/95 text-zinc-900 backdrop-blur-sm hover:bg-white shadow-lg border-0 font-semibold"
+              className="rounded-full bg-white/95 text-zinc-900 backdrop-blur-sm hover:bg-white shadow-lg border-0 font-semibold py-4"
             />
           </div>
         </Link>

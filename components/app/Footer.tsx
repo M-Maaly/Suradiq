@@ -15,7 +15,7 @@ export function Footer() {
           <p className="mt-4 text-base text-zinc-600 dark:text-zinc-300 max-w-lg mx-auto">
             Get early access to new collections, exclusive offers, and design inspiration delivered to your inbox.
           </p>
-          <div className="mt-8 flex max-w-md mx-auto gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row max-w-md mx-auto gap-3">
             <input
               type="email"
               placeholder="Your email address"
