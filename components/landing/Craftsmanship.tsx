@@ -66,11 +66,11 @@ export function Craftsmanship() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="rounded-[2.5rem] border border-zinc-200/60 bg-white p-8 shadow-2xl sm:p-12 lg:p-16 dark:border-zinc-800/60 dark:bg-zinc-900"
+          className="rounded-[1.5rem] sm:rounded-[2.5rem] border border-zinc-200/60 bg-white p-6 shadow-2xl sm:p-12 lg:p-16 dark:border-zinc-800/60 dark:bg-zinc-900"
         >
           {/* Big quote */}
-          <div className="mb-16 text-center">
-            <p className="mx-auto max-w-3xl text-2xl font-medium leading-relaxed text-zinc-700 sm:text-3xl lg:text-4xl lg:leading-snug dark:text-zinc-200">
+          <div className="mb-12 sm:mb-16 text-center">
+            <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-zinc-700 sm:text-3xl lg:text-4xl lg:leading-snug dark:text-zinc-200">
               &ldquo;We don&apos;t just make furniture.
               <br />
               <span className="font-black text-zinc-900 dark:text-white">
@@ -110,14 +110,14 @@ export function Craftsmanship() {
           </div>
 
           {/* Bottom Stats Bar */}
-          <div className="mt-12 flex flex-col items-center justify-between gap-8 rounded-2xl bg-zinc-50 px-8 py-6 sm:flex-row dark:bg-zinc-800/50">
+          <div className="mt-12 grid grid-cols-2 gap-8 rounded-2xl bg-zinc-50 px-6 py-8 sm:flex sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6 dark:bg-zinc-800/50">
             {[
               { value: "100%", label: "Handmade" },
               { value: "10yr", label: "Warranty" },
               { value: "Zero", label: "Waste Goal" },
               { value: "48hr", label: "Quality Check" },
             ].map((stat) => (
-              <div key={stat.label} className="flex items-center gap-3 text-center sm:text-left">
+              <div key={stat.label} className="flex flex-col items-center gap-1 text-center sm:flex-row sm:gap-3 sm:text-left">
                 <span className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
                   {stat.value}
                 </span>

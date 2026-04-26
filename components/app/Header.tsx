@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Heart, Menu, Package, ShoppingBag, Sparkles, User, Home, ShoppingCart, Info, Mail, Hammer } from "lucide-react";
+import { Heart, Menu, Package, ShoppingBag, Sparkles, User, Home, ShoppingCart, Info, Mail, Moon, Sun } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,9 +34,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/60 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-zinc-800/60 dark:bg-zinc-950/95">
       <div className="mx-auto flex h-[68px] max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Left Side: Mobile Menu & Logo */}
-        <div className="flex items-center gap-4">
-          {/* Mobile Menu Trigger */}
+        
+        {/* LEFT: Mobile Menu + Logo */}
+        <div className="flex items-center gap-3">
+          {/* Mobile Menu (burger) */}
           <div className="lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -50,7 +51,8 @@ export function Header() {
                     <Logo />
                   </SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-2 p-6">
+                <div className="flex flex-col gap-1 p-6">
+                  {/* Navigation Links */}
                   <Link href="/" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
                     <Home className="h-4 w-4" /> Home
                   </Link>
@@ -69,28 +71,43 @@ export function Header() {
                     </Link>
                   </SignedIn>
                   
-                  <div className="my-4 h-px bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="my-3 h-px bg-zinc-200 dark:bg-zinc-800" />
 
-                  <div className="flex flex-col gap-4">
-                     <Button
-                        onClick={() => {
-                          openChat();
-                        }}
-                        className="w-full justify-start rounded-full border border-zinc-200 bg-white px-6 py-6 text-sm font-bold uppercase tracking-widest text-zinc-900 shadow-none transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
-                      >
-                        <Sparkles className="h-3.5 w-3.5 mr-2 text-amber-500" />
-                        Ask AI Assistant
-                      </Button>
+                  {/* Quick Actions inside mobile menu */}
+                  <button
+                    type="button"
+                    onClick={openWishlist}
+                    className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900"
+                  >
+                    <Heart className="h-4 w-4" /> Wishlist
+                    {wishlistItems.length > 0 && (
+                      <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                        {wishlistItems.length}
+                      </span>
+                    )}
+                  </button>
+
+                  <div className="my-3 h-px bg-zinc-200 dark:bg-zinc-800" />
+
+                  {/* AI + Theme */}
+                  <div className="flex flex-col gap-3">
+                    <Button
+                      onClick={() => openChat()}
+                      className="w-full justify-start rounded-full border border-zinc-200 bg-white px-6 py-6 text-sm font-bold uppercase tracking-widest text-zinc-900 shadow-none transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                    >
+                      <Sparkles className="h-3.5 w-3.5 mr-2 text-amber-500" />
+                      Ask AI Assistant
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
             </Sheet>
           </div>
-          
+
           <Logo />
         </div>
 
-        {/* Center Nav Links (desktop) */}
+        {/* CENTER: Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-8">
           <Link href="/" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
             Home
@@ -111,11 +128,11 @@ export function Header() {
           </SignedIn>
         </nav>
 
-        {/* Actions */}
+        {/* RIGHT: Actions */}
         <div className="flex items-center gap-1 sm:gap-2">
           {mounted && (
             <>
-              {/* AI Shopping Assistant (hidden on mobile, moved to menu) */}
+              {/* AI Button — desktop only */}
               {!isChatOpen && (
                 <Button
                   onClick={openChat}
@@ -126,14 +143,15 @@ export function Header() {
                 </Button>
               )}
 
+              {/* Dark mode — visible on all sizes */}
               <DarkModeToggle />
 
-              {/* Wishlist */}
+              {/* Wishlist — desktop only */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={openWishlist}
-                className="relative h-9 w-9 rounded-full text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+                className="relative hidden h-9 w-9 rounded-full text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 sm:flex dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
               >
                 <Heart className="h-[18px] w-[18px]" />
                 {wishlistItems.length > 0 && (
@@ -144,7 +162,7 @@ export function Header() {
                 <span className="sr-only">Wishlist</span>
               </Button>
 
-              {/* Cart Button */}
+              {/* Cart — always visible */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -160,6 +178,7 @@ export function Header() {
                 <span className="sr-only">Open cart ({totalItems} items)</span>
               </Button>
 
+              {/* User — always visible */}
               <SignedIn>
                 <UserButton
                   afterSwitchSessionUrl="/"
@@ -195,8 +214,6 @@ export function Header() {
                   </Button>
                 </SignInButton>
               </SignedOut>
-
-
             </>
           )}
 
@@ -210,4 +227,3 @@ export function Header() {
     </header>
   );
 }
-
