@@ -39,39 +39,34 @@ export function TrustedPartners() {
           </p>
         </motion.div>
 
-        {/* Partners Grid */}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {partners.map((partner, index) => (
-            <motion.div
-              key={partner.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group flex flex-col items-center justify-center gap-3 rounded-3xl border border-zinc-800/60 bg-zinc-900/50 px-6 py-10 backdrop-blur-sm transition-all duration-500 hover:border-zinc-700 hover:bg-zinc-800/50"
-            >
-              {partner.logo ? (
-                /* Real logo image */
-                <div className="flex h-14 w-full items-center justify-center rounded-2xl bg-zinc-800 p-3 transition-colors duration-500 group-hover:bg-white">
+        {/* Hyper-Minimalist Line Banner */}
+        <div className="mt-16 sm:mt-24 w-full border-y border-zinc-800/60 py-12 sm:py-20">
+          <div className="flex flex-wrap items-center justify-center gap-12 sm:justify-between sm:gap-6 md:gap-8 lg:gap-10">
+            {partners.map((partner, index) => (
+              <motion.div 
+                key={partner.name}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.8, ease: "easeOut" }}
+                className="flex items-center justify-center grayscale opacity-30 hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+              >
+                {partner.logo ? (
                   <Image
                     src={partner.logo}
                     alt={partner.name}
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto object-contain invert transition-all duration-500 group-hover:invert-0"
+                    width={180}
+                    height={60}
+                    className="h-7 sm:h-9 md:h-11 w-auto object-contain invert saturate-0"
                   />
-                </div>
-              ) : (
-                /* Fallback: stylized initials */
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-800 text-xl font-black tracking-tight text-zinc-400 transition-colors duration-500 group-hover:bg-white group-hover:text-zinc-900">
-                  {partner.initials}
-                </div>
-              )}
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500 transition-colors group-hover:text-zinc-300">
-                {partner.name}
-              </span>
-            </motion.div>
-          ))}
+                ) : (
+                  <span className="text-base sm:text-lg md:text-2xl font-black uppercase tracking-[0.2em] text-zinc-100">
+                    {partner.name}
+                  </span>
+                )}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Stats Row */}

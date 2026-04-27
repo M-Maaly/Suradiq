@@ -10,7 +10,7 @@ interface BestSellersProps {
 
 export function BestSellers({ products }: BestSellersProps) {
   // Grab the first 4 products to act as 'Best Sellers'
-  const bestSellers = products.slice(0, 4);
+  const bestSellers = (products || []).slice(0, 4);
 
   if (bestSellers.length === 0) return null;
 

@@ -11,9 +11,12 @@ import { AddToCartButton } from "../app/AddToCartButton";
 import { useRecentlyViewed } from "@/lib/hooks/use-ui-preferences";
 import { useIsWishlisted, useWishlistActions } from "@/lib/store/wishlist-store-provider";
 import { QuickViewModal } from "./QuickViewModal";
+import { ProductRating } from "../app/ProductRating";
 import type { FILTER_PRODUCTS_BY_NAME_QUERYResult } from "@/sanity.types";
 
-type Product = FILTER_PRODUCTS_BY_NAME_QUERYResult[number];
+type Product = FILTER_PRODUCTS_BY_NAME_QUERYResult[number] & {
+  reviews?: { rating: number }[];
+};
 
 interface ProductCardProps {
   product: Product;
@@ -153,6 +156,9 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
           </Link>
+          
+          <ProductRating productId={product._id} reviews={product.reviews} />
+
           <div className="flex items-center justify-between">
             <p className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
               {formatPrice(product.price)}

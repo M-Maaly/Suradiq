@@ -26,6 +26,7 @@ export function Header() {
   const wishlistItems = useWishlistItems();
   const { openWishlist } = useWishlistActions();
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -39,7 +40,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           {/* Mobile Menu (burger) */}
           <div className="lg:hidden">
-            <Sheet>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
                   <Menu className="h-5 w-5" />
@@ -53,30 +54,32 @@ export function Header() {
                 </SheetHeader>
                 <div className="flex flex-col gap-1 p-6">
                   {/* Navigation Links */}
-                  <Link href="/" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                  <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
                     <Home className="h-4 w-4" /> Home
                   </Link>
-                  <Link href="/shop" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                  <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
                     <ShoppingCart className="h-4 w-4" /> Shop
                   </Link>
-                  <Link href="/about" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                  <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
                     <Info className="h-4 w-4" /> About Us
                   </Link>
-                  <Link href="/contact" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                  <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
                     <Mail className="h-4 w-4" /> Contact
                   </Link>
-                  <SignedIn>
-                    <Link href="/orders" className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                      <Package className="h-4 w-4" /> Orders
-                    </Link>
-                  </SignedIn>
+                  {mounted && (
+                    <SignedIn>
+                      <Link href="/orders" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
+                        <Package className="h-4 w-4" /> Orders
+                      </Link>
+                    </SignedIn>
+                  )}
                   
                   <div className="my-3 h-px bg-zinc-200 dark:bg-zinc-800" />
 
                   {/* Quick Actions inside mobile menu */}
                   <button
                     type="button"
-                    onClick={openWishlist}
+                    onClick={() => { openWishlist(); setIsMobileMenuOpen(false); }}
                     className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900"
                   >
                     <Heart className="h-4 w-4" /> Wishlist
@@ -92,7 +95,7 @@ export function Header() {
                   {/* AI + Theme */}
                   <div className="flex flex-col gap-3">
                     <Button
-                      onClick={() => openChat()}
+                      onClick={() => { openChat(); setIsMobileMenuOpen(false); }}
                       className="w-full justify-start rounded-full border border-zinc-200 bg-white px-6 py-6 text-sm font-bold uppercase tracking-widest text-zinc-900 shadow-none transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
                     >
                       <Sparkles className="h-3.5 w-3.5 mr-2 text-amber-500" />
@@ -121,11 +124,13 @@ export function Header() {
           <Link href="/contact" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
             Contact
           </Link>
-          <SignedIn>
-            <Link href="/orders" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-              Orders
-            </Link>
-          </SignedIn>
+          {mounted && (
+            <SignedIn>
+              <Link href="/orders" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+                Orders
+              </Link>
+            </SignedIn>
+          )}
         </nav>
 
         {/* RIGHT: Actions */}

@@ -14,44 +14,51 @@ import {
   FEATURED_PRODUCTS_QUERY,
   FILTER_PRODUCTS_BY_NAME_QUERY,
 } from "@/sanity/queries/products";
-import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default async function Home() {
 
-  // Fetch all products (just taking a general slice for BestSellers/Suggestions)
-  const { data: products } = await sanityFetch({
-    query: FILTER_PRODUCTS_BY_NAME_QUERY,
-    params: {
-      searchQuery: "",
-      categorySlug: "",
-      color: "",
-      material: "",
-      minPrice: 0,
-      maxPrice: 0,
-      inStock: false,
-    },
-  });
+  let products: any[] = [];
+  let categories: any[] = [];
+  let featuredProducts: any[] = [];
 
-  // Fetch all categories for filter sidebar
-  const { data: categories } = await sanityFetch({
-    query: ALL_CATEGORIES_QUERY,
-  });
+  try {
+    // Parallel fetch all data
+    const [productsRes, categoriesRes, featuredRes] = await Promise.all([
+      sanityFetch({
+        query: FILTER_PRODUCTS_BY_NAME_QUERY,
+        params: {
+          searchQuery: "",
+          categorySlug: "",
+          color: "",
+          material: "",
+          minPrice: 0,
+          maxPrice: 0,
+          inStock: false,
+        },
+      }),
+      sanityFetch({
+        query: ALL_CATEGORIES_QUERY,
+      }),
+      sanityFetch({
+        query: FEATURED_PRODUCTS_QUERY,
+      }),
+    ]);
 
-  // Fetch featured products for carousel
-  const { data: feateredProducts } = await sanityFetch({
-    query: FEATURED_PRODUCTS_QUERY,
-  });
+    products = productsRes.data || [];
+    categories = categoriesRes.data || [];
+    featuredProducts = featuredRes.data || [];
+  } catch (error) {
+    console.error("Sanity Fetch Error:", error);
+  }
 
   const featuredSaleProduct = products.find((p: any) => p.name?.toLowerCase().includes("executive ergonomic office chair")) || products[0];
 
   return (
     <div className="pb-0">
       {/* 1. Featured Top Carousel */}
-      <Suspense fallback={<FeaturedCarouselSkeleton />}>
-        <FeaturedCarousel products={feateredProducts} />
-      </Suspense>
+      <FeaturedCarousel products={featuredProducts} />
 
       {/* 2. Marquee Promotion */}
       <MarqueeBanner />

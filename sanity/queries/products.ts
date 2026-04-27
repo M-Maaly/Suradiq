@@ -37,7 +37,8 @@ const FILTERED_PRODUCT_PROJECTION = `{
   },
   material,
   color,
-  stock
+  stock,
+  "reviews": reviews[]{rating}
 }`;
 
 /** Scoring for relevance-based search */
@@ -80,7 +81,8 @@ export const ALL_PRODUCTS_QUERY = defineQuery(`*[
   dimensions,
   stock,
   featured,
-  assemblyRequired
+  assemblyRequired,
+  "reviews": reviews[]{rating}
 }`);
 
 /**
@@ -144,7 +146,8 @@ export const PRODUCTS_BY_CATEGORY_QUERY = defineQuery(`*[
   },
   material,
   color,
-  stock
+  stock,
+  "reviews": reviews[]{rating}
 }`);
 
 /**
@@ -178,8 +181,27 @@ export const PRODUCT_BY_SLUG_QUERY = defineQuery(`*[
   dimensions,
   stock,
   featured,
-  assemblyRequired
+  assemblyRequired,
+  "reviews": reviews[]{rating, comment, userName, createdAt}
 }`);
+
+/**
+ * Get related products (same category)
+ */
+export const RELATED_PRODUCTS_QUERY = defineQuery(`*[
+  _type == "product"
+  && category->slug.current == $categorySlug
+  && _id != $productId
+][0...7] ${FILTERED_PRODUCT_PROJECTION}`);
+
+/**
+ * Get recommended products (could be based on some criteria, here just taking some)
+ */
+export const RECOMMENDED_PRODUCTS_QUERY = defineQuery(`*[
+  _type == "product"
+  && _id != $productId
+  && !(category->slug.current == $categorySlug)
+][0...7] ${FILTERED_PRODUCT_PROJECTION}`);
 
 // ============================================
 // Search & Filter Queries (Server-Side)

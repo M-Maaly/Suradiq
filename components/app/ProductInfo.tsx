@@ -6,6 +6,7 @@ import { StockBadge } from "@/components/app/StockBadge";
 import { formatPrice } from "@/lib/utils";
 import type { PRODUCT_BY_SLUG_QUERYResult } from "@/sanity.types";
 import { ProductWishlistButton } from "./ProductWishlistButton";
+import { ProductRating } from "@/components/app/ProductRating";
 
 interface ProductInfoProps {
   product: NonNullable<PRODUCT_BY_SLUG_QUERYResult>;
@@ -31,10 +32,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         {product.name}
       </h1>
 
-      {/* Price */}
-      <p className="mt-5 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-        {formatPrice(product.price)}
-      </p>
+      {/* Price & Rating */}
+      <div className="mt-5 flex items-center justify-between">
+        <p className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+          {formatPrice(product.price)}
+        </p>
+        <ProductRating productId={product._id} reviews={(product as any).reviews} interactive />
+      </div>
 
       {/* Description */}
       {product.description && (

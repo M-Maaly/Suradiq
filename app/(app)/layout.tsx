@@ -9,6 +9,7 @@ import { CartStoreProvider } from "@/lib/store/cart-store-provider";
 import { ChatStoreProvider } from "@/lib/store/chat-store-provider";
 import { WishlistStoreProvider } from "@/lib/store/wishlist-store-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SanityLive } from "@/sanity/lib/live";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <ChatSheet />
             <WishlistSheet />
             <Toaster position="bottom-center" />
+            <SanityLive />
           </ChatStoreProvider>
         </WishlistStoreProvider>
       </CartStoreProvider>

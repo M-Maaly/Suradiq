@@ -15,8 +15,10 @@ interface PersonalizedHomeProps {
 
 export function PersonalizedHome({ products }: PersonalizedHomeProps) {
   const { recentlyViewedIds } = useRecentlyViewed();
-  const wishlistItems = useWishlistItems();
-  const wishlistIds = useMemo(() => wishlistItems.map(item => item.productId), [wishlistItems]);
+  const rawWishlistItems = useWishlistItems();
+  
+  const wishlistItems = useMemo(() => Array.isArray(rawWishlistItems) ? rawWishlistItems : [], [rawWishlistItems]);
+  const wishlistIds = useMemo(() => wishlistItems.map(item => item?.productId).filter(Boolean), [wishlistItems]);
 
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -26,20 +28,24 @@ export function PersonalizedHome({ products }: PersonalizedHomeProps) {
   }, []);
 
   const recentlyViewedProducts = useMemo(
-    () =>
-      recentlyViewedIds
-        .map((id) => products.find((product) => product._id === id))
+    () => {
+      if (!Array.isArray(products) || !Array.isArray(recentlyViewedIds)) return [];
+      return recentlyViewedIds
+        .map((id) => products.find((product) => product?._id === id))
         .filter((product): product is NonNullable<typeof product> => Boolean(product))
-        .slice(0, 4),
+        .slice(0, 4);
+    },
     [products, recentlyViewedIds],
   );
 
   const wishlistProducts = useMemo(
-    () =>
-      wishlistIds
-        .map((id) => products.find((product) => product._id === id))
+    () => {
+      if (!Array.isArray(products) || !Array.isArray(wishlistIds)) return [];
+      return wishlistIds
+        .map((id) => products.find((product) => product?._id === id))
         .filter((product): product is NonNullable<typeof product> => Boolean(product))
-        .slice(0, 4),
+        .slice(0, 4);
+    },
     [products, wishlistIds],
   );
 

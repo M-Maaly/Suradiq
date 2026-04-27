@@ -120,6 +120,23 @@ export const productType = defineType({
       initialValue: false,
       description: "Does this product require assembly?",
     }),
+    defineField({
+      name: "reviews",
+      type: "array",
+      group: "details",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "userId", type: "string" },
+            { name: "userName", type: "string" },
+            { name: "rating", type: "number", validation: (rule) => rule.min(1).max(5) },
+            { name: "comment", type: "text" },
+            { name: "createdAt", type: "datetime" },
+          ],
+        },
+      ],
+    }),
   ],
   preview: {
     select: {
