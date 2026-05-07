@@ -91,10 +91,7 @@ export const ALL_PRODUCTS_QUERY = defineQuery(`*[
 export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[
   _type == "product"
   && name in [
-    "The Royale Emerald Curved Sofa",
-    "Nordic Grey 3-Seater Sofa",
-    "Vintage Leather Chesterfield",
-    "Executive Ergonomic Office Chair",
+    "The Royale Emerald Curved Sofa",    "Executive Ergonomic Office Chair",
     "Cognac Leather Accent Chair",
     "Emerald Velvet Luxury Armchair"
   ]

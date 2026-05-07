@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Heart, Menu, Package, ShoppingBag, Sparkles, User, Home, ShoppingCart, Info, Mail, Moon, Sun } from "lucide-react";
+import { Heart, Menu, Package, ShoppingBag, Sparkles, User, Home, ShoppingCart, Info, Mail } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -16,9 +17,12 @@ import { useCartActions, useTotalItems } from "@/lib/store/cart-store-provider";
 import { useChatActions, useIsChatOpen } from "@/lib/store/chat-store-provider";
 import { useWishlistItems, useWishlistActions } from "@/lib/store/wishlist-store-provider";
 import { DarkModeToggle } from "./DarkModeToggle";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import Logo from "./Logo";
 
 export function Header() {
+  const t = useTranslations("Header");
+  const locale = useLocale();
   const { openCart } = useCartActions();
   const { openChat } = useChatActions();
   const isChatOpen = useIsChatOpen();
@@ -46,30 +50,30 @@ export function Header() {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] bg-[#FAF9F7] p-0 dark:bg-zinc-950">
+              <SheetContent side={locale === "ar" ? "right" : "left"} className="w-[300px] bg-[#FAF9F7] p-0 dark:bg-zinc-950">
                 <SheetHeader className="border-b border-zinc-200 p-6 dark:border-zinc-800">
-                  <SheetTitle className="text-left">
+                  <SheetTitle className="text-start">
                     <Logo />
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-1 p-6">
                   {/* Navigation Links */}
                   <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                    <Home className="h-4 w-4" /> Home
+                    <Home className="h-4 w-4" /> {t("home")}
                   </Link>
                   <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                    <ShoppingCart className="h-4 w-4" /> Shop
+                    <ShoppingCart className="h-4 w-4" /> {t("shop")}
                   </Link>
                   <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                    <Info className="h-4 w-4" /> About Us
+                    <Info className="h-4 w-4" /> {t("aboutUs")}
                   </Link>
                   <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                    <Mail className="h-4 w-4" /> Contact
+                    <Mail className="h-4 w-4" /> {t("contact")}
                   </Link>
                   {mounted && (
                     <SignedIn>
                       <Link href="/orders" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900">
-                        <Package className="h-4 w-4" /> Orders
+                        <Package className="h-4 w-4" /> {t("orders")}
                       </Link>
                     </SignedIn>
                   )}
@@ -82,9 +86,9 @@ export function Header() {
                     onClick={() => { openWishlist(); setIsMobileMenuOpen(false); }}
                     className="flex items-center gap-3 rounded-2xl p-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white dark:text-zinc-100 dark:hover:bg-zinc-900"
                   >
-                    <Heart className="h-4 w-4" /> Wishlist
+                    <Heart className="h-4 w-4" /> {t("wishlist")}
                     {wishlistItems.length > 0 && (
-                      <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                      <span className="ms-auto flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                         {wishlistItems.length}
                       </span>
                     )}
@@ -92,15 +96,25 @@ export function Header() {
 
                   <div className="my-3 h-px bg-zinc-200 dark:bg-zinc-800" />
 
-                  {/* AI + Theme */}
-                  <div className="flex flex-col gap-3">
+                  {/* AI + Theme + Language */}
+                  <div className="flex flex-col gap-4">
                     <Button
                       onClick={() => { openChat(); setIsMobileMenuOpen(false); }}
                       className="w-full justify-start rounded-full border border-zinc-200 bg-white px-6 py-6 text-sm font-bold uppercase tracking-widest text-zinc-900 shadow-none transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
                     >
-                      <Sparkles className="h-3.5 w-3.5 mr-2 text-amber-500" />
-                      Ask AI Assistant
+                      <Sparkles className="h-3.5 w-3.5 me-2 text-amber-500" />
+                      {t("askAI")}
                     </Button>
+
+                    <div className="flex items-center justify-between px-2">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Settings</span>
+                        <div className="flex items-center gap-3">
+                          <LanguageSwitcher />
+                          <DarkModeToggle />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
@@ -112,22 +126,22 @@ export function Header() {
 
         {/* CENTER: Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-8">
-          <Link href="/" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-            Home
+          <Link href="/" className="text-md font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t("home")}
           </Link>
-          <Link href="/shop" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-            Shop
+          <Link href="/shop" className="text-md font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t("shop")}
           </Link>
-          <Link href="/about" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-            About Us
+          <Link href="/about" className="text-md font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t("aboutUs")}
           </Link>
-          <Link href="/contact" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-            Contact
+          <Link href="/contact" className="text-md font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t("contact")}
           </Link>
           {mounted && (
             <SignedIn>
-              <Link href="/orders" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
-                Orders
+              <Link href="/orders" className="text-md font-medium text-zinc-600 hover:text-zinc-900 transition-colors dark:text-zinc-400 dark:hover:text-zinc-100">
+                {t("orders")}
               </Link>
             </SignedIn>
           )}
@@ -143,13 +157,20 @@ export function Header() {
                   onClick={openChat}
                   className="hidden rounded-full border border-zinc-200 bg-white px-5 py-2 text-sm font-semibold text-zinc-900 shadow-none transition-all hover:bg-zinc-50 hover:shadow-md lg:inline-flex dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
                 >
-                  <Sparkles className="h-3.5 w-3.5 mr-1.5 text-amber-500" />
-                  Ask AI
+                  <Sparkles className="h-3.5 w-3.5 me-1.5 text-amber-500" />
+                  {t("askAI")}
                 </Button>
               )}
 
-              {/* Dark mode — visible on all sizes */}
-              <DarkModeToggle />
+              {/* Language Switcher — Desktop only (now in mobile menu) */}
+              <div className="hidden lg:flex">
+                <LanguageSwitcher />
+              </div>
+
+              {/* Dark mode — Desktop only (now in mobile menu) */}
+              <div className="hidden lg:flex">
+                <DarkModeToggle />
+              </div>
 
               {/* Wishlist — desktop only */}
               <Button
@@ -160,11 +181,11 @@ export function Header() {
               >
                 <Heart className="h-[18px] w-[18px]" />
                 {wishlistItems.length > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-zinc-900 text-[9px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                  <span className="absolute -end-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-zinc-900 text-[9px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                     {wishlistItems.length}
                   </span>
                 )}
-                <span className="sr-only">Wishlist</span>
+                <span className="sr-only">{t("wishlist")}</span>
               </Button>
 
               {/* Cart — always visible */}
@@ -176,11 +197,11 @@ export function Header() {
               >
                 <ShoppingBag className="h-[18px] w-[18px]" />
                 {totalItems > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-zinc-900 text-[9px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                  <span className="absolute -end-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-zinc-900 text-[9px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                     {totalItems > 99 ? "99+" : totalItems}
                   </span>
                 )}
-                <span className="sr-only">Open cart ({totalItems} items)</span>
+                <span className="sr-only">{t("cart")} ({totalItems} items)</span>
               </Button>
 
               {/* User — always visible */}
@@ -215,7 +236,7 @@ export function Header() {
                     className="h-9 w-9 rounded-full text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                   >
                     <User className="h-[18px] w-[18px]" />
-                    <span className="sr-only">Sign in</span>
+                    <span className="sr-only">{t("signIn")}</span>
                   </Button>
                 </SignInButton>
               </SignedOut>

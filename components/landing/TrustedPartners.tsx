@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const partners = [
   { name: "Vogue Living", initials: "VL", logo: "/logos/vogue-living.svg" },
@@ -13,6 +14,7 @@ const partners = [
 ];
 
 export function TrustedPartners() {
+  const t = useTranslations("TrustedPartners");
   return (
     <section className="relative overflow-hidden bg-zinc-950 py-24 dark:bg-black">
       {/* Subtle grain overlay */}
@@ -28,14 +30,13 @@ export function TrustedPartners() {
           className="mb-20 text-center"
         >
           <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-500">
-            Collaborations & Partnerships
+            {t("subtitle")}
           </p>
           <h2 className="text-4xl font-black uppercase tracking-tighter text-white md:text-6xl">
-            Trusted by the best
+            {t("title")}
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-zinc-400">
-            We partner with world-class brands and publications to bring you furniture 
-            that meets the highest standards of design, quality, and sustainability.
+            {t("description")}
           </p>
         </motion.div>
 
@@ -78,10 +79,10 @@ export function TrustedPartners() {
           className="mt-20 grid grid-cols-2 gap-6 md:grid-cols-4"
         >
           {[
-            { value: "150+", label: "Brand Partners" },
-            { value: "24", label: "Countries Served" },
-            { value: "98%", label: "Client Satisfaction" },
-            { value: "12K+", label: "Projects Delivered" },
+            { value: "150+", label: t("brandPartners") },
+            { value: "24", label: t("countriesServed") },
+            { value: "98%", label: t("clientSatisfaction") },
+            { value: "12K+", label: t("projectsDelivered") },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -100,3 +101,4 @@ export function TrustedPartners() {
     </section>
   );
 }
+

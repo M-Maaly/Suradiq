@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface SeasonalSaleProps {
   product?: any;
 }
 
 export function SeasonalSale({ product }: SeasonalSaleProps) {
+  const t = useTranslations("SeasonalSale");
   const [timeLeft, setTimeLeft] = useState({ days: 12, hours: 14, minutes: 30, seconds: 0 });
 
   // Simple visual countdown effect
@@ -42,20 +44,20 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
 
         <div className="relative z-10 flex flex-col items-center lg:flex-row lg:justify-between gap-12">
           {/* Text Content */}
-          <div className="max-w-2xl text-center lg:text-left">
+          <div className="max-w-2xl text-center lg:text-start">
             <span className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-800/50 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-300 backdrop-blur-md mb-6">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
               </span>
-              Limited Time Offer
+              {t("limitedTime")}
             </span>
             <h2 className="text-4xl font-black uppercase tracking-tighter text-white md:text-6xl lg:text-7xl">
-              Winter Sale
-              <span className="block text-zinc-500">Up to 40% Off</span>
+              {t("winterSale")}
+              <span className="block text-zinc-500">{t("discount")}</span>
             </h2>
             <p className="mt-6 text-lg text-zinc-400">
-              Elevate your living space with our premium bespoke collection. Rare woods, exceptional craftsmanship, now available at our lowest prices of the season.
+              {t("description")}
             </p>
 
             <motion.div 
@@ -67,8 +69,8 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
                 href="/shop?sort=price_asc"
                 className="group flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-all hover:bg-zinc-200"
               >
-                Shop the Sale
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                {t("shopSale")}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
               </Link>
             </motion.div>
           </div>
@@ -77,12 +79,12 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
           <div className="flex flex-col items-center lg:items-end gap-6 shrink-0 z-20">
             
             {/* Product Image & Details */}
-            <div className="flex flex-col items-center lg:items-end text-center lg:text-right">
+            <div className="flex flex-col items-center lg:items-end text-center lg:text-end">
               {product?.image?.asset?.url && (
                 <div className="relative h-48 w-48 sm:h-64 sm:w-64 mb-6 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 p-4">
                   <Image
                     src={product.image.asset.url}
-                    alt={product.name || "Featured Sale Product"}
+                    alt={product.name || t("flashDeal")}
                     fill
                     className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -90,7 +92,7 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
                 </div>
               )}
               <span className="mb-2 text-sm font-bold uppercase tracking-widest text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full">
-                Flash Deal Of The Day
+                {t("flashDeal")}
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white max-w-[300px]">
                 {product?.name || "Executive Ergonomic Office Chair"}
@@ -108,10 +110,10 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
             {/* Countdown Timer */}
             <div className="flex gap-4 sm:gap-6 backdrop-blur-md bg-white/5 rounded-3xl p-6 lg:p-8 border border-white/10 shadow-2xl">
               {[
-                { label: "Days", value: timeLeft.days },
-                { label: "Hours", value: timeLeft.hours },
-                { label: "Mins", value: timeLeft.minutes },
-                { label: "Secs", value: timeLeft.seconds },
+                { label: t("days"), value: timeLeft.days },
+                { label: t("hours"), value: timeLeft.hours },
+                { label: t("mins"), value: timeLeft.minutes },
+                { label: t("secs"), value: timeLeft.seconds },
               ].map((unit, index) => (
                 <div key={unit.label} className="flex flex-col items-center">
                   <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-700 shadow-inner">
@@ -131,3 +133,4 @@ export function SeasonalSale({ product }: SeasonalSaleProps) {
     </div>
   );
 }
+

@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -10,6 +9,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import type { ALL_CATEGORIES_QUERYResult } from "@/sanity.types";
+import { useTranslations } from "next-intl";
 
 interface CategoryTilesProps {
   categories: ALL_CATEGORIES_QUERYResult;
@@ -20,6 +20,8 @@ export default function CategoryTiles({
   categories,
   activeCategory,
 }: CategoryTilesProps) {
+  const t = useTranslations("Filters");
+
   return (
     <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 mt-4">
       {/* Quick Filters - Top Row */}
@@ -32,7 +34,7 @@ export default function CategoryTiles({
               : "border border-zinc-200 bg-white/50 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400 dark:hover:bg-zinc-800"
           }`}
         >
-          All Collections
+          {t("allCollections")}
         </Link>
       </div>
 
@@ -44,12 +46,12 @@ export default function CategoryTiles({
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="-ms-4">
           {categories.slice(0, 10).map((category, index) => {
             const mainImage = category.image?.asset?.url || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800";
             
             return (
-              <CarouselItem key={category._id} className="pl-4 basis-[85%] sm:basis-[45%] lg:basis-[30%] xl:basis-[22%]">
+              <CarouselItem key={category._id} className="ps-4 basis-[85%] sm:basis-[45%] lg:basis-[30%] xl:basis-[22%]">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}

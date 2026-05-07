@@ -1,0 +1,199 @@
+{
+  "Header": {
+    "logo": "Suradiq",
+    "home": "Home",
+    "shop": "Shop",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "orders": "Orders",
+    "wishlist": "Wishlist",
+    "askAI": "Ask AI",
+    "signIn": "Sign In",
+    "cart": "Cart"
+  },
+  "Footer": {
+    "dontMissOut": "Don't miss out",
+    "joinCommunity": "Join the Suradiq community",
+    "communityDesc": "Get early access to new collections, exclusive offers, and design inspiration delivered to your inbox.",
+    "emailPlaceholder": "Your email address",
+    "subscribe": "Subscribe",
+    "company": "Company",
+    "aboutUs": "About us",
+    "careers": "Careers",
+    "press": "Press",
+    "blog": "Blog",
+    "customerService": "Customer Service",
+    "contact": "Contact",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "faqs": "FAQs",
+    "trackOrder": "Track Order",
+    "moreToExplore": "More to Explore",
+    "newArrivals": "New Arrivals",
+    "bestSellers": "Best Sellers",
+    "sale": "Sale",
+    "giftCards": "Gift Cards",
+    "connect": "Connect",
+    "instagram": "Instagram",
+    "pinterest": "Pinterest",
+    "twitter": "Twitter",
+    "facebook": "Facebook",
+    "rights": "All rights reserved. We embrace quality, minimalism and comfort.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "Home": {
+    "shopByCategory": "Shop by Category",
+    "viewFullCollection": "View Full Collection"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "soldOut": "Sold Out",
+    "inStock": "In Stock",
+    "productImage": "Product image"
+  },
+  "Craftsmanship": {
+    "title": "Our Craftsmanship",
+    "subtitle": "The Art Behind Every Piece",
+    "description": "We believe furniture should be an investment — in your home, in your well-being, and in the planet. Every Suradiq piece is a fusion of traditional artistry and modern innovation.",
+    "quote": "We don't just make furniture.",
+    "quoteHighlight": "We craft heirlooms.",
+    "philosophy": "Suradiq Design Philosophy",
+    "handmade": "Handmade",
+    "warranty": "Warranty",
+    "waste": "Waste",
+    "check": "Check",
+    "steps": {
+      "handcrafted": {
+        "title": "Handcrafted with care",
+        "desc": "Every piece is meticulously assembled by skilled artisans who bring decades of expertise to their craft."
+      },
+      "sustainable": {
+        "title": "Sustainably sourced",
+        "desc": "We partner with certified suppliers to use only FSC-approved wood, organic fabrics, and eco-friendly finishes."
+      },
+      "delivery": {
+        "title": "White-Glove Delivery",
+        "desc": "Our specialist team delivers, assembles, and places your new pieces exactly where you want them."
+      },
+      "built": {
+        "title": "Built to last",
+        "desc": "Our furniture undergoes rigorous stress testing, ensuring each piece withstands the demands of daily life — beautifully."
+      }
+    }
+  },
+  "BestSellers": {
+    "title": "Best Sellers",
+    "subtitle": "Our most loved pieces, trusted by hundreds."
+  },
+  "SeasonalSale": {
+    "limitedTime": "Limited Time Offer",
+    "winterSale": "Winter Sale",
+    "discount": "Up to 40% Off",
+    "description": "Elevate your living space with our premium bespoke collection. Rare woods, exceptional craftsmanship, now available at our lowest prices of the season.",
+    "shopSale": "Shop the Sale",
+    "flashDeal": "Flash Deal Of The Day",
+    "days": "Days",
+    "hours": "Hours",
+    "mins": "Mins",
+    "secs": "Secs"
+  },
+  "Testimonials": {
+    "title": "Voices of trust",
+    "subtitle": "What Our Clients Say"
+  },
+  "TrustedPartners": {
+    "title": "Trusted by the best",
+    "subtitle": "Collaborations & Partnerships",
+    "description": "We partner with world-class brands and publications to bring you furniture that meets the highest standards of design, quality, and sustainability.",
+    "brandPartners": "Brand Partners",
+    "countriesServed": "Countries Served",
+    "clientSatisfaction": "Client Satisfaction",
+    "projectsDelivered": "Projects Delivered"
+  },
+  "Benefits": {
+    "whiteGlove": {
+      "title": "White-Glove Delivery",
+      "desc": "Fully assembled and placed in your home by our premium delivery team."
+    },
+    "warranty": {
+      "title": "10-Year Warranty",
+      "desc": "Built to last generations. We back our craftsmanship with a decade-long guarantee."
+    },
+    "sustainable": {
+      "title": "Sustainable Woods",
+      "desc": "Responsibly sourced oak and walnut from certified sustainable forests."
+    },
+    "bespoke": {
+      "title": "Bespoke Details",
+      "desc": "Every piece is uniquely finished, with variations that tell a story of true craftsmanship."
+    }
+  },
+  "About": {
+    "title": "Our Story",
+    "p1": "Suradiq was born from a desire to return to the roots of true craftsmanship. In an era of mass-produced, fast-furniture, we chose a different path—one that honors the material, respects the maker, and ultimately elevates the home.",
+    "p2": "We focus on modern minimalism, believing that a piece of furniture should not overwhelm a space, but rather anchor it. Every table, sofa, and chair we produce is bespoke, carved by experienced hands using only the most premium, sustainably sourced woods, metals, and leathers.",
+    "bespoke": "Bespoke",
+    "compromise": "Compromise"
+  },
+  "Contact": {
+    "title": "Get in touch",
+    "desc": "Whether you have a question about a bespoke order, materials, or delivery schedules, our concierge team is ready to assist you.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "details": {
+      "email": "Email",
+      "phone": "Phone",
+      "studio": "Studio & Workshop",
+      "appointment": "By appointment only.",
+      "replyTime": "We aim to reply within 24 hours.",
+      "workHours": "Everyday, 10am - 11pm EEST"
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "q": "Do you offer international shipping?",
+      "a": "Yes, we ship globally on a case-by-case basis. Because of the size and weight of our furniture, international freight is calculated manually. Please reach out to our concierge for a quote."
+    },
+    "q2": {
+      "q": "Can I customize the dimensions of a table?",
+      "a": "Absolutely. We are a bespoke furniture manufacturer. While our catalog offers standard sizes that fit most rooms, we can adjust dimensions. Contact us directly to begin a bespoke commission."
+    },
+    "q3": {
+      "q": "How long does production take?",
+      "a": "Our standard lead time is 4-8 weeks. Every piece is hand-finished and inspected rigorously to ensure it meets the Suradiq standard before it leaves our workshop."
+    },
+    "q4": {
+      "q": "How should I care for my solid oak furniture?",
+      "a": "We recommend avoiding direct, intense sunlight and extreme humidity changes. Clean spills immediately with a damp cloth, and use a premium beeswax polish every six months to keep the wood nourished."
+    }
+  },
+  "Shop": {
+    "productFound": "products found",
+    "for": "for",
+    "showFilters": "Show Filters",
+    "hideFilters": "Hide Filters"
+  },
+  "Filters": {
+    "title": "Filters",
+    "clearAll": "Clear all",
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "go": "Go",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "allCollections": "All Collections",
+    "color": "Color",
+    "allColors": "All Colors",
+    "material": "Material",
+    "allMaterials": "All Materials",
+    "priceRange": "Price Range",
+    "inStockOnly": "In Stock Only",
+    "sortBy": "Sort By"
+  }
+}

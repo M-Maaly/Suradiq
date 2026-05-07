@@ -18,11 +18,35 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import type { Metadata, ResolvingMetadata } from "next";
 
 interface ProductPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata(
+  { params }: ProductPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  
+  const response = await sanityFetch({
+    query: PRODUCT_BY_SLUG_QUERY,
+    params: { slug },
+  });
+  const product = response.data;
+
+  if (!product) return {};
+
+  return {
+    title: product.name,
+    description: product.description || `Experience the luxury of ${product.name} from Suradiq's premium furniture collection.`,
+    openGraph: {
+      images: product.images?.[0]?.asset?.url ? [product.images[0].asset.url] : [],
+    },
+  };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

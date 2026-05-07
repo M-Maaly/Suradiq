@@ -15,12 +15,14 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { COLORS, MATERIALS, SORT_OPTIONS } from "@/lib/constants/filters";
 import type { ALL_CATEGORIES_QUERYResult } from "@/sanity.types";
+import { useTranslations } from "next-intl";
 
 interface ProductFiltersProps {
   categories: ALL_CATEGORIES_QUERYResult;
 }
 
 export function ProductFilters({ categories }: ProductFiltersProps) {
+  const t = useTranslations("Filters");
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -109,7 +111,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-zinc-500" />
           <span className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-900 dark:text-zinc-100">
-            Filters
+            {t("title")}
           </span>
           {activeFilterCount > 0 && (
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
@@ -124,7 +126,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
             className="flex items-center gap-1 text-xs font-semibold text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
           >
             <X className="h-3 w-3" />
-            Clear all
+            {t("clearAll")}
           </button>
         )}
       </div>
@@ -132,17 +134,17 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       {/* Search */}
       <div className="space-y-2">
         <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-          Search
+          {t("search")}
         </label>
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <Input
             name="search"
-            placeholder="Search products..."
+            placeholder={t("searchPlaceholder")}
             defaultValue={currentSearch}
             className="flex-1 rounded-xl border-zinc-200 bg-white text-sm focus:border-zinc-400 focus:ring-0 dark:border-zinc-700 dark:bg-zinc-800"
           />
           <Button type="submit" size="sm" className="rounded-xl bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900">
-            Go
+            {t("go")}
           </Button>
         </form>
       </div>
@@ -151,7 +153,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-            Category
+            {t("category")}
           </label>
           {isCategoryActive && (
             <button type="button" onClick={() => clearSingleFilter("category")} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
@@ -166,10 +168,10 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           }
         >
           <SelectTrigger className="rounded-xl border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
-            <SelectValue placeholder="All Categories" />
+            <SelectValue placeholder={t("allCategories")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="all">{t("allCategories")}</SelectItem>
             {categories.map((category) => (
               <SelectItem key={category._id} value={category.slug ?? ""}>
                 {category.title}
@@ -183,7 +185,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-            Color
+            {t("color")}
           </label>
           {isColorActive && (
             <button type="button" onClick={() => clearSingleFilter("color")} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
@@ -198,10 +200,10 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           }
         >
           <SelectTrigger className="rounded-xl border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
-            <SelectValue placeholder="All Colors" />
+            <SelectValue placeholder={t("allColors")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Colors</SelectItem>
+            <SelectItem value="all">{t("allColors")}</SelectItem>
             {COLORS.map((color) => (
               <SelectItem key={color.value} value={color.value}>
                 {color.label}
@@ -215,7 +217,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-            Material
+            {t("material")}
           </label>
           {isMaterialActive && (
             <button type="button" onClick={() => clearSingleFilter("material")} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
@@ -230,10 +232,10 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           }
         >
           <SelectTrigger className="rounded-xl border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
-            <SelectValue placeholder="All Materials" />
+            <SelectValue placeholder={t("allMaterials")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Materials</SelectItem>
+            <SelectItem value="all">{t("allMaterials")}</SelectItem>
             {MATERIALS.map((material) => (
               <SelectItem key={material.value} value={material.value}>
                 {material.label}
@@ -247,7 +249,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-            Price Range
+            {t("priceRange")}
           </label>
           {isPriceActive && (
             <button type="button" onClick={() => clearSingleFilter("price")} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
@@ -286,17 +288,17 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
             className="peer sr-only"
           />
           <div className="h-5 w-9 rounded-full bg-zinc-200 transition-colors peer-checked:bg-zinc-900 dark:bg-zinc-700 dark:peer-checked:bg-zinc-100" />
-          <div className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
+          <div className="absolute start-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4 rtl:peer-checked:-translate-x-4" />
         </div>
         <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          In Stock Only
+          {t("inStockOnly")}
         </span>
       </label>
 
       {/* Sort */}
       <div className="space-y-2">
         <label className="block text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
-          Sort By
+          {t("sortBy")}
         </label>
         <Select
           value={currentSort}

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ProductFilters } from "./ProductFilters";
 import { ProductGrid } from "./ProductGrid";
+import { useTranslations } from "next-intl";
 import type {
   ALL_CATEGORIES_QUERYResult,
   FILTER_PRODUCTS_BY_NAME_QUERYResult,
@@ -22,6 +23,7 @@ export function ProductSection({
   products,
   searchQuery,
 }: ProductSectionProps) {
+  const t = useTranslations("Shop");
   const [filtersOpen, setFiltersOpen] = useState(true);
 
   return (
@@ -30,10 +32,16 @@ export function ProductSection({
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
           <span className="font-bold text-zinc-900 dark:text-zinc-100">{products.length}</span>{" "}
-          {products.length === 1 ? "product" : "products"} found
+          {t("productFound")}
           {searchQuery && (
             <span>
-              {" "}for &quot;<span className="font-semibold text-zinc-900 dark:text-zinc-100">{searchQuery}</span>&quot;
+              {" "}
+              {t("for")}{" "}
+              &quot;
+              <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                {searchQuery}
+              </span>
+              &quot;
             </span>
           )}
         </p>
@@ -43,17 +51,17 @@ export function ProductSection({
           size="sm"
           onClick={() => setFiltersOpen(!filtersOpen)}
           className="flex items-center gap-2 rounded-full border-zinc-200 bg-white px-5 py-2 text-sm font-semibold shadow-none transition-all hover:bg-zinc-50 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
-          aria-label={filtersOpen ? "Hide filters" : "Show filters"}
+          aria-label={filtersOpen ? t("hideFilters") : t("showFilters")}
         >
           {filtersOpen ? (
             <>
               <X className="h-4 w-4" />
-              <span>Hide Filters</span>
+              <span>{t("hideFilters")}</span>
             </>
           ) : (
             <>
               <SlidersHorizontal className="h-4 w-4" />
-              <span>Show Filters</span>
+              <span>{t("showFilters")}</span>
             </>
           )}
         </Button>

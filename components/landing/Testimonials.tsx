@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const testimonials = [
+  // ... (keeping existing testimonials)
   {
     id: 1,
     name: "Sophia Martinez",
@@ -75,7 +77,14 @@ const accentColors = [
   "from-lime-500/20 to-green-500/20",
 ];
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+
 export function Testimonials() {
+  const t = useTranslations("Testimonials");
   return (
     <section className="relative overflow-hidden py-24">
       <div className="pointer-events-none absolute inset-0 bg-[#FAF9F7] dark:bg-zinc-950" />
@@ -90,15 +99,57 @@ export function Testimonials() {
           className="mb-16 text-center"
         >
           <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-500 dark:text-zinc-400">
-            What Our Clients Say
+            {t("subtitle")}
           </p>
           <h2 className="text-4xl font-black uppercase tracking-tighter text-zinc-900 md:text-6xl dark:text-zinc-100">
-            Voices of trust
+            {t("title")}
           </h2>
         </motion.div>
 
-        {/* Bento Grid */}
-        <div className="grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile Carousel */}
+        <div className="lg:hidden">
+          <Carousel opts={{ align: "start", loop: false }} className="w-full">
+            <CarouselContent className="-ms-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={testimonial.id} className="ps-4 basis-[90%] sm:basis-[48%]">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05, duration: 0.5 }}
+                    className="flex flex-col justify-between rounded-[2rem] border border-zinc-200/60 bg-white p-8 h-full dark:border-zinc-800/60 dark:bg-zinc-900"
+                  >
+                    <div>
+                      <div className={`mb-6 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${accentColors[index % accentColors.length]}`}>
+                        <Quote className="h-4 w-4 text-zinc-700 dark:text-zinc-200" />
+                      </div>
+                      <div className="mb-4 flex gap-0.5">
+                        {Array.from({ length: testimonial.rating }).map((_, i) => (
+                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
+                        &ldquo;{testimonial.text}&rdquo;
+                      </p>
+                    </div>
+                    <div className="mt-8 flex items-center gap-3 border-t border-zinc-100 pt-6 dark:border-zinc-800">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xs font-black text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{testimonial.name}</p>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{testimonial.role}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+
+        {/* Desktop Bento Grid */}
+        <div className="hidden lg:grid auto-rows-auto grid-cols-3 gap-4">
           {testimonials.map((testimonial, index) => {
             const isLarge = testimonial.size === "large";
             const isMedium = testimonial.size === "medium";
@@ -110,12 +161,8 @@ export function Testimonials() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
-                className={`group relative flex flex-col justify-between rounded-[1.5rem] sm:rounded-[2rem] border border-zinc-200/60 bg-white p-6 sm:p-8 transition-all duration-500 hover:border-zinc-300 hover:shadow-xl dark:border-zinc-800/60 dark:bg-zinc-900 dark:hover:border-zinc-700 ${
-                  isLarge
-                    ? "sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:p-12"
-                    : isMedium
-                      ? "lg:row-span-2 lg:p-10"
-                      : "lg:p-8"
+                className={`group relative flex flex-col justify-between rounded-[2rem] border border-zinc-200/60 bg-white p-8 transition-all duration-500 hover:border-zinc-300 hover:shadow-xl dark:border-zinc-800/60 dark:bg-zinc-900 dark:hover:border-zinc-700 ${
+                  isLarge ? "col-span-2 row-span-2 p-12" : isMedium ? "row-span-2 p-10" : "p-8"
                 }`}
               >
                 {/* Quote Icon */}

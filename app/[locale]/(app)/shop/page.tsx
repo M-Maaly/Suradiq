@@ -8,6 +8,12 @@ import {
   FILTER_PRODUCTS_BY_PRICE_DESC_QUERY,
   FILTER_PRODUCTS_BY_RELEVANCE_QUERY,
 } from "@/sanity/queries/products";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shop All Products",
+  description: "Browse our complete collection of bespoke, meticulously crafted furniture. Find the perfect minimalist pieces for your home.",
+};
 
 interface ShopPageProps {
   searchParams: Promise<{

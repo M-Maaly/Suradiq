@@ -3,6 +3,23 @@ import { ProductSection } from "@/components/landing/ProductSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
 import { PRODUCTS_BY_CATEGORY_QUERY } from "@/sanity/queries/products";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  
+  const { data: categories } = await sanityFetch({
+    query: ALL_CATEGORIES_QUERY,
+  });
+  
+  const currentCategory = categories.find(c => c.slug === slug);
+  const title = currentCategory?.title || slug;
+
+  return {
+    title: `${title} Collection`,
+    description: `Explore our curated selection of ${title.toLowerCase()}. Premium, handcrafted minimalist furniture for your home.`,
+  };
+}
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;

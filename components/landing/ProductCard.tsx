@@ -13,6 +13,7 @@ import { useIsWishlisted, useWishlistActions } from "@/lib/store/wishlist-store-
 import { QuickViewModal } from "./QuickViewModal";
 import { ProductRating } from "../app/ProductRating";
 import type { FILTER_PRODUCTS_BY_NAME_QUERYResult } from "@/sanity.types";
+import { useTranslations } from "next-intl";
 
 type Product = FILTER_PRODUCTS_BY_NAME_QUERYResult[number] & {
   reviews?: { rating: number }[];
@@ -23,6 +24,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const t = useTranslations("Common");
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { toggleItem: toggleWishlist, openWishlist } = useWishlistActions();
@@ -56,7 +58,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {displayedImageUrl ? (
             <Image
               src={displayedImageUrl}
-              alt={product.name ?? "Product image"}
+              alt={product.name ?? t("productImage")}
               fill
               className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
@@ -76,15 +78,15 @@ export function ProductCard({ product }: ProductCardProps) {
           {isOutOfStock && (
             <Badge
               variant="destructive"
-              className="absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
+              className="absolute start-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
             >
-              Sold Out
+              {t("soldOut")}
             </Badge>
           )}
 
           {/* Category badge */}
           {product.category && !isOutOfStock && (
-            <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-700 backdrop-blur-sm dark:bg-zinc-900/90 dark:text-zinc-300">
+            <span className="absolute start-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-700 backdrop-blur-sm dark:bg-zinc-900/90 dark:text-zinc-300">
               {product.category.title}
             </span>
           )}
@@ -107,7 +109,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         {/* Action icons top-right */}
-        <div className="absolute right-3 top-3 z-20 flex flex-col gap-2">
+        <div className="absolute end-3 top-3 z-20 flex flex-col gap-2">
           <button
             type="button"
             className={cn(

@@ -8,17 +8,20 @@ import { BestSellers } from "@/components/landing/BestSellers";
 import { TrustedPartners } from "@/components/landing/TrustedPartners";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Craftsmanship } from "@/components/landing/Craftsmanship";
+import { BenefitsRow } from "@/components/landing/BenefitsRow";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
 import {
   FEATURED_PRODUCTS_QUERY,
   FILTER_PRODUCTS_BY_NAME_QUERY,
 } from "@/sanity/queries/products";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 export default async function Home() {
-
+  const t = await getTranslations("Home");
+  
   let products: any[] = [];
   let categories: any[] = [];
   let featuredProducts: any[] = [];
@@ -65,7 +68,7 @@ export default async function Home() {
       
       <div id="collection" className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 mt-12 mb-8">
         <h2 className="text-4xl font-black tracking-tighter text-zinc-900 md:text-5xl dark:text-zinc-100 uppercase">
-          Shop by Category
+          {t("shopByCategory")}
         </h2>
       </div>
 
@@ -85,6 +88,9 @@ export default async function Home() {
       {/* 6. Trusted Partners & Collaborations */}
       <TrustedPartners />
 
+      {/* 6.5. Core Benefits & Trust */}
+      <BenefitsRow />
+
       {/* 7. Customer Testimonials */}
       <Testimonials />
 
@@ -102,8 +108,8 @@ export default async function Home() {
           href="/shop"
           className="group inline-flex items-center gap-2 rounded-full border border-zinc-200 px-8 py-4 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-all hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-900"
         >
-          View Full Collection
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          {t("viewFullCollection")}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
         </Link>
       </div>
 

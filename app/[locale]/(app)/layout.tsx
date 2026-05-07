@@ -13,23 +13,21 @@ import { SanityLive } from "@/sanity/lib/live";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
-      <CartStoreProvider>
-        <WishlistStoreProvider>
-          <ChatStoreProvider>
-            <AppShell>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-            </AppShell>
-            <CartSheet />
-            <ChatSheet />
-            <WishlistSheet />
-            <Toaster position="bottom-center" />
-            <SanityLive />
-          </ChatStoreProvider>
-        </WishlistStoreProvider>
-      </CartStoreProvider>
-    </ClerkProvider>
+    <CartStoreProvider>
+      <WishlistStoreProvider>
+        <ChatStoreProvider>
+          <AppShell>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </AppShell>
+          <CartSheet />
+          <ChatSheet />
+          <WishlistSheet />
+          <Toaster position="bottom-center" />
+          <SanityLive />
+        </ChatStoreProvider>
+      </WishlistStoreProvider>
+    </CartStoreProvider>
   );
 }
