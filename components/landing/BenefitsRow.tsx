@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Truck, ShieldCheck, TreePine, Sparkles } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Carousel,
   CarouselContent,
@@ -30,6 +30,8 @@ const itemVariants = {
 
 export function BenefitsRow() {
   const t = useTranslations("Benefits");
+  const locale = useLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   const benefits = [
     {
@@ -59,6 +61,7 @@ export function BenefitsRow() {
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden">
           <Carousel
+            dir={dir}
             opts={{
               align: "start",
               loop: false,

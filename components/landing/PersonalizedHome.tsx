@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/landing/ProductCard";
 import { useRecentlyViewed } from "@/lib/hooks/use-ui-preferences";
 import { useWishlistItems } from "@/lib/store/wishlist-store-provider";
 import type { FILTER_PRODUCTS_BY_NAME_QUERYResult } from "@/sanity.types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Carousel,
   CarouselContent,
@@ -22,6 +22,10 @@ interface PersonalizedHomeProps {
 
 export function PersonalizedHome({ products }: PersonalizedHomeProps) {
   const t = useTranslations("Common");
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+  const dir = isRtl ? "rtl" : "ltr";
+
   const { recentlyViewedIds } = useRecentlyViewed();
   const rawWishlistItems = useWishlistItems();
   
@@ -113,7 +117,7 @@ export function PersonalizedHome({ products }: PersonalizedHomeProps) {
           </h3>
           
           <div className="relative group">
-            <Carousel setApi={setRecentApi} opts={{ align: "start", loop: false }} className="w-full">
+            <Carousel setApi={setRecentApi} dir={dir} opts={{ align: "start", loop: false }} className="w-full">
               <CarouselContent className="-ms-4">
                 {recentlyViewedProducts.map((product) => (
                   <CarouselItem key={`recent-${product._id}`} className="ps-4 basis-[70%] sm:basis-[45%] lg:basis-[25%]">
@@ -127,7 +131,7 @@ export function PersonalizedHome({ products }: PersonalizedHomeProps) {
             <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800 lg:hidden">
               <motion.div 
                 className="h-full bg-zinc-900 dark:bg-zinc-100"
-                style={{ width: `${recentProgress}%`, transformOrigin: "left" }}
+                style={{ width: `${recentProgress}%`, transformOrigin: isRtl ? "right" : "left" }}
                 animate={{ width: `${recentProgress}%` }}
               />
             </div>
@@ -146,7 +150,7 @@ export function PersonalizedHome({ products }: PersonalizedHomeProps) {
           </h3>
           
           <div className="relative group">
-            <Carousel setApi={setWishlistApi} opts={{ align: "start", loop: false }} className="w-full">
+            <Carousel setApi={setWishlistApi} dir={dir} opts={{ align: "start", loop: false }} className="w-full">
               <CarouselContent className="-ms-4">
                 {wishlistProducts.map((product) => (
                   <CarouselItem key={`wishlist-${product._id}`} className="ps-4 basis-[70%] sm:basis-[45%] lg:basis-[25%]">
@@ -160,7 +164,7 @@ export function PersonalizedHome({ products }: PersonalizedHomeProps) {
             <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800 lg:hidden">
               <motion.div 
                 className="h-full bg-zinc-900 dark:bg-zinc-100"
-                style={{ width: `${wishlistProgress}%`, transformOrigin: "left" }}
+                style={{ width: `${wishlistProgress}%`, transformOrigin: isRtl ? "right" : "left" }}
                 animate={{ width: `${wishlistProgress}%` }}
               />
             </div>

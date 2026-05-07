@@ -9,7 +9,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import type { ALL_CATEGORIES_QUERYResult } from "@/sanity.types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 interface CategoryTilesProps {
   categories: ALL_CATEGORIES_QUERYResult;
@@ -21,6 +21,8 @@ export default function CategoryTiles({
   activeCategory,
 }: CategoryTilesProps) {
   const t = useTranslations("Filters");
+  const locale = useLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 mt-4">
@@ -40,6 +42,7 @@ export default function CategoryTiles({
 
       {/* Side Slider for Categories */}
       <Carousel
+        dir={dir}
         opts={{
           align: "start",
           loop: false,

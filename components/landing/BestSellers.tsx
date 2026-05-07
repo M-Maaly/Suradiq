@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ProductCard } from "@/components/landing/ProductCard";
 import type { FILTER_PRODUCTS_BY_NAME_QUERYResult } from "@/sanity.types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Carousel,
   CarouselContent,
@@ -18,6 +18,10 @@ interface BestSellersProps {
 
 export function BestSellers({ products }: BestSellersProps) {
   const t = useTranslations("BestSellers");
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+  const dir = isRtl ? "rtl" : "ltr";
+  
   // Grab the first 8 products to have a good carousel
   const bestSellers = (products || []).slice(0, 8);
 
@@ -58,6 +62,7 @@ export function BestSellers({ products }: BestSellersProps) {
       <div className="relative group">
         <Carousel
           setApi={setApi}
+          dir={dir}
           opts={{
             align: "start",
             loop: false,
@@ -102,7 +107,7 @@ export function BestSellers({ products }: BestSellersProps) {
             className="h-full bg-zinc-900 dark:bg-zinc-100"
             style={{ 
               width: `${progress}%`,
-              transformOrigin: "left"
+              transformOrigin: isRtl ? "right" : "left"
             }}
             animate={{ width: `${progress}%` }}
             transition={{ type: "spring", bounce: 0, duration: 0.2 }}

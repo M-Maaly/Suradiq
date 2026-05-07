@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const testimonials = [
   // ... (keeping existing testimonials)
@@ -85,6 +85,9 @@ import {
 
 export function Testimonials() {
   const t = useTranslations("Testimonials");
+  const locale = useLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
     <section className="relative overflow-hidden py-24">
       <div className="pointer-events-none absolute inset-0 bg-[#FAF9F7] dark:bg-zinc-950" />
@@ -108,7 +111,7 @@ export function Testimonials() {
 
         {/* Mobile Carousel */}
         <div className="lg:hidden">
-          <Carousel opts={{ align: "start", loop: false }} className="w-full">
+          <Carousel dir={dir} opts={{ align: "start", loop: false }} className="w-full">
             <CarouselContent className="-ms-4">
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={testimonial.id} className="ps-4 basis-[90%] sm:basis-[48%]">
