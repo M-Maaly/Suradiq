@@ -13,6 +13,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
 interface PersonalizedHomeProps {
