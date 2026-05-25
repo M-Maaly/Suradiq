@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "../globals.css";
-import {
-  ClerkProvider,
-} from "@clerk/nextjs";
-import { arSA } from "@clerk/localizations";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ClerkThemeProvider } from "@/components/providers/ClerkThemeProvider";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
@@ -85,16 +82,19 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <ClerkProvider localization={locale === 'ar' ? arSA : undefined}>
-      <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
-        <body
-          className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
-        >
-          <NextIntlClientProvider messages={messages}>
-            <ThemeProvider>{children}</ThemeProvider>
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+      <body
+        className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+      >
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <ClerkThemeProvider locale={locale}>
+              {children}
+            </ClerkThemeProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
+

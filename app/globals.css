@@ -183,3 +183,9 @@ html {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.5 0 0);
 }
+
+/* Smooth carousel transitions */
+[data-slot="carousel-content"] {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}

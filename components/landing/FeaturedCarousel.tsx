@@ -56,6 +56,7 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
         opts={{
           loop: true,
           align: "start",
+          duration: 35,
         }}
         plugins={[
           Autoplay({
@@ -66,9 +67,9 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
         ]}
         className="w-full"
       >
-        <CarouselContent className="-ml-0">
+        <CarouselContent className="-ml-6">
           {products.map((product) => (
-            <CarouselItem key={product._id} className="pl-0">
+            <CarouselItem key={product._id} className="pl-6">
               <FeaturedSlide product={product} />
             </CarouselItem>
           ))}
@@ -106,7 +107,7 @@ function FeaturedSlide({ product }: FeaturedSlideProps) {
   const mainImage = product.images?.[0]?.asset?.url;
 
   return (
-    <div className="relative flex min-h-[85vh] sm:min-h-[70vh] w-full flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-[#EAE8E3] dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800">
+    <div className="relative flex h-[85vh] sm:h-[70vh] w-full flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-[#EAE8E3] dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800">
       
       {/* Background Typography - Hidden on mobile for clarity as requested */}
       <div className="absolute top-[10%] sm:top-[5%] left-0 w-full select-none text-center hidden sm:flex justify-center overflow-hidden z-0">

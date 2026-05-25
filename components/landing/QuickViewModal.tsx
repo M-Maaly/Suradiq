@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { AddToCartButton } from "@/components/app/AddToCartButton";
 import {
@@ -32,12 +32,6 @@ export function QuickViewModal({
   onOpenChange,
 }: QuickViewModalProps) {
   const [index, setIndex] = useState(0);
-  const [is360View, setIs360View] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStateRef = useRef<{
-    startX: number;
-    startIndex: number;
-  } | null>(null);
 
   const frames = product.images ?? [];
   const currentImage = frames[index]?.asset?.url ?? frames[0]?.asset?.url;
@@ -49,72 +43,19 @@ export function QuickViewModal({
       (old - 1 + Math.max(frames.length, 1)) % Math.max(frames.length, 1),
     );
 
-  useEffect(() => {
-    if (!is360View || isDragging || frames.length < 2) return;
-
-    const intervalId = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % frames.length);
-    }, 180);
-
-    return () => window.clearInterval(intervalId);
-  }, [frames.length, is360View, isDragging]);
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto rounded-3xl border-zinc-200/60 bg-white p-0 scrollbar-hide dark:border-zinc-800/60 dark:bg-zinc-950">
         <div className="grid gap-0 md:grid-cols-2">
           {/* Image Side */}
           <div className="relative aspect-square bg-[#EDEAE4] dark:bg-zinc-900">
-            {/* 360 toggle */}
-            <div className="absolute left-4 top-4 z-10">
-              <button
-                type="button"
-                onClick={() => setIs360View((prev) => !prev)}
-                className={[
-                  "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all",
-                  is360View
-                    ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
-                    : "border-zinc-300 bg-white/90 text-zinc-700 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200",
-                ].join(" ")}
-                aria-label={is360View ? "Disable 360 mode" : "Enable 360 mode"}
-              >
-                <RotateCcw className={["h-3.5 w-3.5", is360View ? "animate-spin" : ""].join(" ")} />
-                {is360View ? "360°" : "360°"}
-              </button>
-            </div>
 
             {currentImage ? (
               <motion.div
-                key={`${index}-${is360View ? "360" : "gallery"}`}
+                key={`gallery-${index}`}
                 initial={{ opacity: 0.6, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="absolute inset-0"
-                onPointerDown={(e) => {
-                  if (!is360View || frames.length < 2) return;
-                  (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
-                  dragStateRef.current = {
-                    startX: e.clientX,
-                    startIndex: index,
-                  };
-                  setIsDragging(true);
-                }}
-                onPointerMove={(e) => {
-                  if (!is360View || !isDragging || !dragStateRef.current) return;
-                  const len = frames.length;
-                  const dx = e.clientX - dragStateRef.current.startX;
-                  const step = Math.round(dx / 28);
-                  const nextIndex = (dragStateRef.current.startIndex + step) % len;
-                  const normalized = nextIndex < 0 ? nextIndex + len : nextIndex;
-                  setIndex(normalized);
-                }}
-                onPointerUp={() => {
-                  setIsDragging(false);
-                  dragStateRef.current = null;
-                }}
-                onPointerCancel={() => {
-                  setIsDragging(false);
-                  dragStateRef.current = null;
-                }}
               >
                 <Image
                   src={currentImage}
